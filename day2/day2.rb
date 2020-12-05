@@ -1001,105 +1001,32 @@ input = <<~INPUT
 6-7 m: mlmrrmm
 INPUT
 
-class Entry
-    def initialize(letter:, min_amount:, max_amount:, password:)
-      @frequency = Hash.new(0)
-      @min = min_amount
-      @max = max_amount
-      @password = password
-      @letter = letter
-  
-      process_password
-    end
-  
-    def process_password
-      password.each_char do |char|
-        frequency[char] += 1
-      end
-    end
-  
-    def valid?
-      frequency[letter] >= min && frequency[letter] <= max
-    end
-  
-    private
-  
-    attr_reader :frequency, :letter, :min, :max, :password
+valid_entries = 0
+entries = input.split("\n")
+# part 1 
+entries.each do |entry|
+  requirements, password = entry.split(':').map(&:strip)
+  amounts, letter = requirements.split(' ')
+  min_amount, max_amount = amounts.split('-').map(&:to_i)
+  password_frequency = Hash.new(0)
+  password.each_char do |char|
+    password_frequency[char] += 1
   end
-  
-  class ProblemSolver
-    attr_reader :input
-  
-    def initialize(input)
-      @input = input
-    end
-  
-    def entry_class
-      Object.const_get(:Entry)
-    end
-  
-    def solve
-      valid_entries = []
-      invalid_entries = []
-  
-      entries = input.split("\n")
-      entries.each_with_index do |entry, i|
-        entry_args = process_entry(entry)
-        entry = entry_class.new(**entry_args)
-        if entry.valid?
-          valid_entries << i
-        else
-          invalid_entries << i
-        end
-      end
-  
-      output = {
-          valid_entries: valid_entries,
-          valid_entries_count: valid_entries.count,
-          invalid_entries: invalid_entries,
-          invalid_entries_count: invalid_entries.count,
-      }
-  
-      puts output
-  
-      output
-    end
-  
-    def process_entry(entry_string)
-      requirements, password = entry_string.split(':').map(&:strip)
-      amounts, letter = requirements.split(' ')
-      min_amount, max_amount = amounts.split('-').map(&:to_i)
-      {
-          password: password,
-          letter: letter,
-          min_amount: min_amount,
-          max_amount: max_amount
-      }
-    end
-  
+  valid_entries += 1 if password_frequency[letter] >= min_amount && password_frequency[letter] <= max_amount
+end
+puts "valid entries for part 1: #{valid_entries}"
+# part 2
+valid_entries = 0
+entries.each do |entry|
+  requirements, password = entry.split(':').map(&:strip)
+  amounts, letter = requirements.split(' ')
+  min_amount, max_amount = amounts.split('-').map(&:to_i)
+  password_frequency = Hash.new(0)
+  password.each_char do |char|
+    password_frequency[char] += 1
   end
-  
-#   puts "*" * 80
-#   puts "Part 1:\n"
-#   ProblemSolver.new(input).solve
-#   puts "*" * 80
-
-class PartTwoEntry < Entry
-    def valid?
-      real_pos1 = min - 1
-      real_pos2 = max - 1
-  
-      (password.chars[real_pos1] == letter) ^ (password.chars[real_pos2] == letter)
-    end
+  if (password.chars[min_amount - 1] == letter) ^ (password.chars[max_amount - 1] == letter)
+    valid_entries += 1 
   end
-  
-  class PartTwoProblemSolver < ProblemSolver
-    def entry_class
-      Object.const_get(:PartTwoEntry)
-    end
-  end
-  
-  puts "*" * 80
-  puts "Part 2:\n"
-  PartTwoProblemSolver.new(input).solve
-  puts "*" * 80
+end
+puts "valid entries for part 2: #{valid_entries}"
