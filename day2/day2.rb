@@ -1001,32 +1001,41 @@ input = <<~INPUT
 6-7 m: mlmrrmm
 INPUT
 
-valid_entries = 0
+# shared setup
 entries = input.split("\n")
+entry_info = entries.map do |entry|
+  requirements, password = entry.split(':').map(&:strip)
+  amounts, letter = requirements.split(' ')
+  min_amount, max_amount = amounts.split('-').map(&:to_i)
+  password_frequency = Hash.new(0)
+  password.each_char do |char|
+    password_frequency[char] += 1
+  end
+  { password_frequency: password_frequency,
+    letter: letter,
+    min_amount: min_amount,
+    max_amount: max_amount,
+    password: password
+  }
+end
+
 # part 1 
-entries.each do |entry|
-  requirements, password = entry.split(':').map(&:strip)
-  amounts, letter = requirements.split(' ')
-  min_amount, max_amount = amounts.split('-').map(&:to_i)
-  password_frequency = Hash.new(0)
-  password.each_char do |char|
-    password_frequency[char] += 1
-  end
-  valid_entries += 1 if password_frequency[letter] >= min_amount && password_frequency[letter] <= max_amount
+valid_entry_count = entry_info.count do |info|
+  password_frequency = info[:password_frequency]
+  letter = info[:letter]
+  min_amount = info[:min_amount]
+  max_amount = info[:max_amount]
+  password_frequency[letter] >= min_amount && password_frequency[letter] <= max_amount
 end
-puts "valid entries for part 1: #{valid_entries}"
+
+puts "number of valid entries for part 1: #{valid_entry_count}"
+
 # part 2
-valid_entries = 0
-entries.each do |entry|
-  requirements, password = entry.split(':').map(&:strip)
-  amounts, letter = requirements.split(' ')
-  min_amount, max_amount = amounts.split('-').map(&:to_i)
-  password_frequency = Hash.new(0)
-  password.each_char do |char|
-    password_frequency[char] += 1
-  end
-  if (password.chars[min_amount - 1] == letter) ^ (password.chars[max_amount - 1] == letter)
-    valid_entries += 1 
-  end
+valid_entry_count = entry_info.count do |info|
+  password = info[:password]
+  letter = info[:letter]
+  min_amount = info[:min_amount]
+  max_amount = info[:max_amount]
+  (password.chars[min_amount - 1] == letter) ^ (password.chars[max_amount - 1] == letter)
 end
-puts "valid entries for part 2: #{valid_entries}"
+puts "valid entries for part 2: #{valid_entry_count}"
