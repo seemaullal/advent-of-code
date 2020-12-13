@@ -2,6 +2,8 @@ current_direction = 'east'
 horizontal_position = 0
 vertical_position = 0
 directions = [[direction[0], int(direction[1:])] for direction in open('day12_input.txt')]
+
+next_direction = { 'north': 'east', 'east': 'south', 'south': 'west', 'west': 'north'}
 # part 1
 for direction, distance in directions:
     if direction == 'F':
@@ -21,29 +23,16 @@ for direction, distance in directions:
         horizontal_position += distance
     elif direction == 'W':
         horizontal_position -= distance
-    elif direction == 'R':
-        while distance > 0:
-            if current_direction == 'north':
-                current_direction = 'east'
-            elif current_direction == 'east':
-                current_direction = 'south'
-            elif current_direction == 'south':
-                current_direction = 'west'
-            elif current_direction == 'west':
-                current_direction = 'north'
-            distance -= 90
-    elif direction == 'L':
-        while distance > 0:
-            if current_direction == 'north':
-                current_direction = 'west'
-            elif current_direction == 'east':
-                current_direction = 'north'
-            elif current_direction == 'south':
-                current_direction = 'east'
-            elif current_direction == 'west':
-                current_direction = 'south'
-            distance -= 90
-print('horizontal position', horizontal_position, 'vertical position', vertical_position) 
+    elif direction == 'R' or direction == 'L':
+        rotations = distance/ 90
+        if direction == 'L':
+            if rotations == 1:
+                rotations = 3
+            elif rotations == 3:
+                rotations = 1
+        while rotations > 0:
+            current_direction = next_direction[current_direction]
+            rotations -= 1
 print('part 1 manhattan distance', abs(horizontal_position) + abs(vertical_position))
 
 # part 2
