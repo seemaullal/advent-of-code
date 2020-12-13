@@ -53,8 +53,13 @@ for direction, distance in directions:
         waypoint_horizontal += distance
     elif direction == 'W':
         waypoint_horizontal -= distance
-    elif direction == 'R':
+    elif direction == 'R' or direction == 'L':
         rotations= distance/90
+        if direction == 'L':
+            if rotations == 1:
+                rotations = 3
+            elif rotations == 3:
+                rotations = 1
         if rotations == 1:
             waypoint_horizontal, waypoint_vertical = waypoint_vertical, -waypoint_horizontal
         elif rotations == 2:
@@ -62,13 +67,4 @@ for direction, distance in directions:
             waypoint_vertical = - waypoint_vertical
         elif rotations == 3: 
             waypoint_horizontal, waypoint_vertical = -waypoint_vertical, waypoint_horizontal
-    elif direction == 'L':
-        rotations= distance/90
-        if rotations == 1:
-            waypoint_horizontal, waypoint_vertical = -waypoint_vertical, waypoint_horizontal
-        elif rotations == 2:
-            waypoint_horizontal = -waypoint_horizontal
-            waypoint_vertical = - waypoint_vertical
-        elif rotations == 3: 
-            waypoint_horizontal, waypoint_vertical = waypoint_vertical, -waypoint_horizontal
 print('part 2 manhattan distance', abs(horizontal_position) + abs(vertical_position))
