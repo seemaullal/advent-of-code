@@ -25,11 +25,7 @@ for direction, distance in directions:
         horizontal_position -= distance
     elif direction == 'R' or direction == 'L':
         rotations = distance/ 90
-        if direction == 'L':
-            if rotations == 1:
-                rotations = 3
-            elif rotations == 3:
-                rotations = 1
+        rotations = 4 - rotations if direction == 'L' else rotations
         while rotations > 0:
             current_direction = next_direction[current_direction]
             rotations -= 1
