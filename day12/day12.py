@@ -2,6 +2,7 @@ current_direction = 'east'
 horizontal_position = 0
 vertical_position = 0
 directions = [[direction[0], int(direction[1:])] for direction in open('day12_input.txt')]
+# part 1
 for direction, distance in directions:
     if direction == 'F':
         if current_direction == 'east':
@@ -44,3 +45,41 @@ for direction, distance in directions:
             distance -= 90
 print('horizontal position', horizontal_position, 'vertical position', vertical_position) 
 print('part 1 manhattan distance', abs(horizontal_position) + abs(vertical_position))
+
+# part 2
+horizontal_position = 0
+vertical_position = 0
+waypoint_horizontal = 10
+waypoint_vertical = 1
+
+for direction, distance in directions:
+    if direction == 'F':
+        horizontal_position += waypoint_horizontal * distance
+        vertical_position += waypoint_vertical * distance
+    elif direction == 'N':
+        waypoint_vertical += distance
+    elif direction == 'S':
+        waypoint_vertical -= distance
+    elif direction == 'E':
+        waypoint_horizontal += distance
+    elif direction == 'W':
+        waypoint_horizontal -= distance
+    elif direction == 'R':
+        rotations= distance/90
+        if rotations == 1:
+            waypoint_horizontal, waypoint_vertical = waypoint_vertical, -waypoint_horizontal
+        elif rotations == 2:
+            waypoint_horizontal = -waypoint_horizontal
+            waypoint_vertical = - waypoint_vertical
+        elif rotations == 3: 
+            waypoint_horizontal, waypoint_vertical = -waypoint_vertical, waypoint_horizontal
+    elif direction == 'L':
+        rotations= distance/90
+        if rotations == 1:
+            waypoint_horizontal, waypoint_vertical = -waypoint_vertical, waypoint_horizontal
+        elif rotations == 2:
+            waypoint_horizontal = -waypoint_horizontal
+            waypoint_vertical = - waypoint_vertical
+        elif rotations == 3: 
+            waypoint_horizontal, waypoint_vertical = waypoint_vertical, -waypoint_horizontal
+print('part 2 manhattan distance', abs(horizontal_position) + abs(vertical_position))
