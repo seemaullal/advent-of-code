@@ -20,17 +20,13 @@ def play_game(player1_cards, player2_cards, is_part_two ):
         if is_part_two and player1_card <= len(player1_cards) and player2_card <= len(player2_cards):
             winner, _ = play_game(player1_cards.copy()[:player1_card], player2_cards.copy()[:player2_card], is_part_two)
             if winner == 1:
-                player1_cards.append(player1_card)
-                player1_cards.append(player2_card)
+                player1_cards.extend([player1_card, player2_card])
             else:
-                player2_cards.append(player2_card)
-                player2_cards.append(player1_card)
+                player2_cards.extend([player2_card, player1_card])
         elif player1_card > player2_card:
-            player1_cards.append(player1_card)
-            player1_cards.append(player2_card)
+            player1_cards.extend([player1_card, player2_card])
         else:
-            player2_cards.append(player2_card)
-            player2_cards.append(player1_card)
+            player2_cards.extend([player2_card, player1_card])
     if player1_cards:
         return 1, player1_cards
     return 2, player2_cards
