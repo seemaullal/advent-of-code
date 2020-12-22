@@ -38,6 +38,3 @@ print('part 1', calculate_score(winning_cards))
 # part 2
 _, winning_cards, = play_game(player1_scores[:], player2_scores[:], True)
 print('part2', calculate_score(winning_cards))
-
-    
-    
