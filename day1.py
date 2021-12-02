@@ -1,4 +1,4 @@
-with open("day1.txt") as file:
+with open("inputs/day1.txt") as file:
     depths = [int(depth) for depth in file.readlines()]
 
 
