@@ -4,7 +4,7 @@ def split_into_parts(command):
 
 
 with open("inputs/day2.txt") as file:
-    commands = map(split_into_parts, file.readlines())
+    commands = list(map(split_into_parts, file.readlines()))
 
 
 def part_1():
@@ -21,8 +21,18 @@ def part_1():
 
 
 def part_2():
-    pass
-
+    horizontal = 0
+    depth = 0
+    aim = 0
+    for command, distance in commands:
+        if command == "forward":
+            horizontal += distance
+            depth += aim * distance
+        elif command == "up":
+            aim -= distance
+        else:
+            aim += distance
+    return horizontal * depth
 
 
 print(f"Part 1: {part_1()}")
