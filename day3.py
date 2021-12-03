@@ -9,6 +9,7 @@ def binary_to_decimal(binary_num: str):
         [2 ** i for i in range(len(binary_num)) if binary_num[len(binary_num) - i - 1] == "1"]
     )
 
+
 def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher_num: bool):
     number_ones = 0
     number_zeroes = 0
@@ -29,11 +30,10 @@ def part_1():
     gamma = ""
     epsilon = ""
     for i in range(len(binary_nums[0])):
-        current_gamma = calculate_target_num(binary_nums, i, True)
-        current_epsilon = "1" if current_gamma == "0" else "0"
-        gamma += current_gamma
-        epsilon += current_epsilon
+        gamma += calculate_target_num(binary_nums, i, True)
+        epsilon += "1" if gamma[-1] == "0" else "0"
     return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
+
 
 def part_2():
     oxygen_nums = binary_nums[:]
