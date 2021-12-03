@@ -3,12 +3,11 @@ from typing import List
 with open("inputs/day3.txt") as file:
     binary_nums = [num.strip() for num in file.readlines()]
 
+
 def binary_to_decimal(binary_num: str):
-    result = 0
-    for i in range(len(binary_num)):
-        if binary_num[len(binary_num) - i - 1] == "1":
-            result += 2 ** i
-    return result
+    return sum(
+        [2 ** i for i in range(len(binary_num)) if binary_num[len(binary_num) - i - 1] == "1"]
+    )
 
 
 def part_1():
@@ -18,7 +17,7 @@ def part_1():
         number_zeroes = 0
         number_ones = 0
         for binary_num in binary_nums:
-            if binary_num[i] == '0':
+            if binary_num[i] == "0":
                 number_zeroes += 1
             else:
                 number_ones += 1
@@ -29,6 +28,7 @@ def part_1():
             gamma += "1"
             epsilon += "0"
     return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
+
 
 def calculate_target_num(binary_nums: List[str], index_to_check: int, for_oxygen: bool):
     number_ones = 0
@@ -45,6 +45,7 @@ def calculate_target_num(binary_nums: List[str], index_to_check: int, for_oxygen
     # this will only happen when there is an equal number of 0s and 1s at the index
     return "1" if for_oxygen else "0"
 
+
 def part_2():
     oxygen_nums = binary_nums[:]
     co2_nums = binary_nums[:]
@@ -52,10 +53,14 @@ def part_2():
     while len(oxygen_nums) != 1 or len(co2_nums) != 1:
         if len(oxygen_nums) != 1:
             target = calculate_target_num(oxygen_nums, current_index, True)
-            oxygen_nums = [binary_num for binary_num in oxygen_nums if binary_num[current_index] == target]
+            oxygen_nums = [
+                binary_num for binary_num in oxygen_nums if binary_num[current_index] == target
+            ]
         if len(co2_nums) != 1:
             target = calculate_target_num(co2_nums, current_index, False)
-            co2_nums = [binary_num for binary_num in co2_nums if binary_num[current_index] == target]
+            co2_nums = [
+                binary_num for binary_num in co2_nums if binary_num[current_index] == target
+            ]
         current_index += 1
     return binary_to_decimal(oxygen_nums[0]) * binary_to_decimal(co2_nums[0])
 
