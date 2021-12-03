@@ -9,28 +9,7 @@ def binary_to_decimal(binary_num: str):
         [2 ** i for i in range(len(binary_num)) if binary_num[len(binary_num) - i - 1] == "1"]
     )
 
-
-def part_1():
-    gamma = ""
-    epsilon = ""
-    for i in range(len(binary_nums[0])):
-        number_zeroes = 0
-        number_ones = 0
-        for binary_num in binary_nums:
-            if binary_num[i] == "0":
-                number_zeroes += 1
-            else:
-                number_ones += 1
-        if number_zeroes > number_ones:
-            gamma += "0"
-            epsilon += "1"
-        else:
-            gamma += "1"
-            epsilon += "0"
-    return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
-
-
-def calculate_target_num(binary_nums: List[str], index_to_check: int, for_oxygen: bool):
+def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher_num: bool):
     number_ones = 0
     number_zeroes = 0
     for num in binary_nums:
@@ -39,12 +18,22 @@ def calculate_target_num(binary_nums: List[str], index_to_check: int, for_oxygen
         elif num[index_to_check] == "1":
             number_ones += 1
     if number_ones > number_zeroes:
-        return "1" if for_oxygen else "0"
+        return "1" if use_higher_num else "0"
     elif number_ones < number_zeroes:
-        return "0" if for_oxygen else "1"
+        return "0" if use_higher_num else "1"
     # this will only happen when there is an equal number of 0s and 1s at the index
-    return "1" if for_oxygen else "0"
+    return "1" if use_higher_num else "0"
 
+
+def part_1():
+    gamma = ""
+    epsilon = ""
+    for i in range(len(binary_nums[0])):
+        current_gamma = calculate_target_num(binary_nums, i, True)
+        current_epsilon = "1" if current_gamma == "0" else "0"
+        gamma += current_gamma
+        epsilon += current_epsilon
+    return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
 
 def part_2():
     oxygen_nums = binary_nums[:]
