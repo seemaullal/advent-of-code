@@ -3,13 +3,6 @@ from typing import List
 with open("inputs/day3.txt") as file:
     binary_nums = [num.strip() for num in file.readlines()]
 
-
-def binary_to_decimal(binary_num: str):
-    return sum(
-        [2 ** i for i in range(len(binary_num)) if binary_num[len(binary_num) - i - 1] == "1"]
-    )
-
-
 def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher_num: bool):
     number_zeroes = len([num for num in binary_nums if num[index_to_check] == "0"])
     number_ones = len(binary_nums) - number_zeroes
@@ -27,7 +20,7 @@ def part_1():
     for i in range(len(binary_nums[0])):
         gamma += calculate_target_num(binary_nums, i, True)
         epsilon += "1" if gamma[-1] == "0" else "0"
-    return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
+    return int(gamma, 2) * int(epsilon, 2)
 
 
 def part_2():
@@ -46,7 +39,7 @@ def part_2():
                 binary_num for binary_num in co2_nums if binary_num[current_index] == target
             ]
         current_index += 1
-    return binary_to_decimal(oxygen_nums[0]) * binary_to_decimal(co2_nums[0])
+    return int(oxygen_nums[0], 2) * int(co2_nums[0], 2)
 
 
 print(f"Part 1: {part_1()}")
