@@ -11,19 +11,22 @@ def binary_to_decimal(binary_num):
 
 
 def part_1():
-    bits = [0] * len(binary_nums[0])
-    for binary_num in binary_nums:
-        for i in range(len(binary_nums[0])):
-            bits[i] += 1 if binary_num[i] == "1" else -1
     gamma = ""
     epsilon = ""
-    for bit in bits:
-        if bit > 0:
-            gamma += "1"
-            epsilon += "0"
-        else:
+    for i in range(len(binary_nums[0])):
+        number_zeroes = 0
+        number_ones = 0
+        for binary_num in binary_nums:
+            if binary_num[i] == '0':
+                number_zeroes += 1
+            else:
+                number_ones += 1
+        if number_zeroes > number_ones:
             gamma += "0"
             epsilon += "1"
+        else:
+            gamma += "1"
+            epsilon += "0"
     return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
 
 
