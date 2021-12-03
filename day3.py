@@ -11,13 +11,8 @@ def binary_to_decimal(binary_num: str):
 
 
 def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher_num: bool):
-    number_ones = 0
-    number_zeroes = 0
-    for num in binary_nums:
-        if num[index_to_check] == "0":
-            number_zeroes += 1
-        elif num[index_to_check] == "1":
-            number_ones += 1
+    number_zeroes = len([num for num in binary_nums if num[index_to_check] == "0"])
+    number_ones = len(binary_nums) - number_zeroes
     if number_ones > number_zeroes:
         return "1" if use_higher_num else "0"
     elif number_ones < number_zeroes:
