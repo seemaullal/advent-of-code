@@ -47,11 +47,7 @@ def part_2():
                 target = "1"
             else:
                 target = "0"
-            new_oxygen_nums = []
-            for num in oxygen_nums:
-                if num[current_index] == target:
-                    new_oxygen_nums.append(num)
-            oxygen_nums = new_oxygen_nums
+            oxygen_nums = [binary_num for binary_num in oxygen_nums if binary_num[current_index] == target]
         if len(co2_nums) != 1:
             number_ones = 0
             number_zeroes = 0
@@ -64,11 +60,7 @@ def part_2():
                 target = "0"
             else:
                 target = "1"
-            new_co2_nums = []
-            for num in co2_nums:
-                if num[current_index] == target:
-                    new_co2_nums.append(num)
-            co2_nums = new_co2_nums
+            co2_nums = [binary_num for binary_num in co2_nums if binary_num[current_index] == target]
         current_index += 1
     return binary_to_decimal(oxygen_nums[0]) * binary_to_decimal(co2_nums[0])
 
