@@ -1,8 +1,9 @@
+from typing import List
+
 with open("inputs/day3.txt") as file:
     binary_nums = [num.strip() for num in file.readlines()]
 
-
-def binary_to_decimal(binary_num):
+def binary_to_decimal(binary_num: str):
     result = 0
     for i in range(len(binary_num)):
         if binary_num[len(binary_num) - i - 1] == "1":
@@ -29,6 +30,20 @@ def part_1():
             epsilon += "0"
     return binary_to_decimal(gamma) * binary_to_decimal(epsilon)
 
+def calculate_target_num(binary_nums: List[str], index_to_check: int, for_oxygen: bool):
+    number_ones = 0
+    number_zeroes = 0
+    for num in binary_nums:
+        if num[index_to_check] == "0":
+            number_zeroes += 1
+        elif num[index_to_check] == "1":
+            number_ones += 1
+    if number_ones > number_zeroes:
+        return "1" if for_oxygen else "0"
+    elif number_ones < number_zeroes:
+        return "0" if for_oxygen else "1"
+    # this will only happen when there is an equal number of 0s and 1s at the index
+    return "1" if for_oxygen else "0"
 
 def part_2():
     oxygen_nums = binary_nums[:]
@@ -36,30 +51,10 @@ def part_2():
     current_index = 0
     while len(oxygen_nums) != 1 or len(co2_nums) != 1:
         if len(oxygen_nums) != 1:
-            number_ones = 0
-            number_zeroes = 0
-            for num in oxygen_nums:
-                if num[current_index] == "0":
-                    number_zeroes += 1
-                elif num[current_index] == "1":
-                    number_ones += 1
-            if number_ones > number_zeroes or number_ones == number_zeroes:
-                target = "1"
-            else:
-                target = "0"
+            target = calculate_target_num(oxygen_nums, current_index, True)
             oxygen_nums = [binary_num for binary_num in oxygen_nums if binary_num[current_index] == target]
         if len(co2_nums) != 1:
-            number_ones = 0
-            number_zeroes = 0
-            for num in co2_nums:
-                if num[current_index] == "0":
-                    number_zeroes += 1
-                elif num[current_index] == "1":
-                    number_ones += 1
-            if number_zeroes <= number_ones:
-                target = "0"
-            else:
-                target = "1"
+            target = calculate_target_num(co2_nums, current_index, False)
             co2_nums = [binary_num for binary_num in co2_nums if binary_num[current_index] == target]
         current_index += 1
     return binary_to_decimal(oxygen_nums[0]) * binary_to_decimal(co2_nums[0])
