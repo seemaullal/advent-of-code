@@ -3,6 +3,7 @@ from typing import List
 with open("inputs/day3.txt") as file:
     binary_nums = [num.strip() for num in file.readlines()]
 
+
 def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher_num: bool):
     number_zeroes = len([num for num in binary_nums if num[index_to_check] == "0"])
     number_ones = len(binary_nums) - number_zeroes
@@ -12,7 +13,7 @@ def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher
         return "0" if use_higher_num else "1"
 
 
-def part_1():
+def part_1() -> int:
     gamma, epsilon = "", ""
     for i in range(len(binary_nums[0])):
         gamma += calculate_target_num(binary_nums, i, True)
@@ -20,7 +21,7 @@ def part_1():
     return int(gamma, 2) * int(epsilon, 2)
 
 
-def part_2():
+def part_2() -> int:
     oxygen_nums, co2_nums = binary_nums[:], binary_nums[:]
     current_index = 0
     while len(oxygen_nums) != 1 or len(co2_nums) != 1:
