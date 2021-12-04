@@ -15,8 +15,7 @@ def calculate_target_num(binary_nums: List[str], index_to_check: int, use_higher
 
 
 def part_1():
-    gamma = ""
-    epsilon = ""
+    gamma, epsilon = "", ""
     for i in range(len(binary_nums[0])):
         gamma += calculate_target_num(binary_nums, i, True)
         epsilon += "1" if gamma[-1] == "0" else "0"
@@ -24,8 +23,7 @@ def part_1():
 
 
 def part_2():
-    oxygen_nums = binary_nums[:]
-    co2_nums = binary_nums[:]
+    oxygen_nums, co2_nums = binary_nums[:], binary_nums[:]
     current_index = 0
     while len(oxygen_nums) != 1 or len(co2_nums) != 1:
         if len(oxygen_nums) != 1:
