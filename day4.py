@@ -45,7 +45,24 @@ def part_1():
 
 
 def part_2():
-    pass
+    boards_still_need_winning = len(boards)
+    current_boards = boards[:]
+    for current_called_number in nums:
+        for board in current_boards:
+            for row in board:
+                for index, num in enumerate(row):
+                    if num == current_called_number:
+                        row[index] = "X"
+        boards_to_keep_playing = []
+        for board in current_boards:
+            won = check_winner(board)
+            if won:
+                boards_still_need_winning -= 1
+                if boards_still_need_winning == 0:
+                    return calculate_score(board, current_called_number)
+            else:
+                boards_to_keep_playing.append(board)
+        current_boards = boards_to_keep_playing
 
 
 print(f"Part 1: {part_1()}")
