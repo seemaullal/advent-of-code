@@ -31,34 +31,30 @@ def calculate_score(board, current_called_number):
     return sum_of_non_called * current_called_number
 
 
+def mark_boards(boards_to_mark, current_number):
+    for board in boards_to_mark:
+        for row in board:
+            for index, num in enumerate(row):
+                if num == current_number:
+                    row[index] = "X"
+
+
 def part_1():
     for current_called_number in nums:
+        mark_boards(boards, current_called_number)
         for board in boards:
-            for row in board:
-                for index, num in enumerate(row):
-                    if num == current_called_number:
-                        row[index] = "X"
-        for board in boards:
-            won = check_winner(board)
-            if won:
+            if check_winner(board):
                 return calculate_score(board, current_called_number)
 
 
 def part_2():
-    boards_still_need_winning = len(boards)
     current_boards = boards[:]
     for current_called_number in nums:
-        for board in current_boards:
-            for row in board:
-                for index, num in enumerate(row):
-                    if num == current_called_number:
-                        row[index] = "X"
+        mark_boards(boards, current_called_number)
         boards_to_keep_playing = []
         for board in current_boards:
-            won = check_winner(board)
-            if won:
-                boards_still_need_winning -= 1
-                if boards_still_need_winning == 0:
+            if check_winner(board):
+                if len(current_boards) == 1:
                     return calculate_score(board, current_called_number)
             else:
                 boards_to_keep_playing.append(board)
