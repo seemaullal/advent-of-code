@@ -23,12 +23,8 @@ def check_winner(board):
 
 
 def calculate_score(board, current_called_number):
-    sum_of_non_called = 0
-    for row in board:
-        for num in row:
-            if num != "X":
-                sum_of_non_called += num
-    return sum_of_non_called * current_called_number
+    row_sums = [sum([space for space in row if space != "X"]) for row in board]
+    return sum(row_sums) * current_called_number
 
 
 def mark_boards(boards_to_mark, current_number):
