@@ -27,14 +27,10 @@ def part_2() -> int:
     while len(oxygen_nums) != 1 or len(co2_nums) != 1:
         if len(oxygen_nums) != 1:
             target = calculate_target_num(oxygen_nums, current_index, True)
-            oxygen_nums = [
-                binary_num for binary_num in oxygen_nums if binary_num[current_index] == target
-            ]
+            oxygen_nums = [binary_num for binary_num in oxygen_nums if binary_num[current_index] == target]
         if len(co2_nums) != 1:
             target = calculate_target_num(co2_nums, current_index, False)
-            co2_nums = [
-                binary_num for binary_num in co2_nums if binary_num[current_index] == target
-            ]
+            co2_nums = [binary_num for binary_num in co2_nums if binary_num[current_index] == target]
         current_index += 1
     return int(oxygen_nums[0], 2) * int(co2_nums[0], 2)
 
