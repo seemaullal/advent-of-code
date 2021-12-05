@@ -1,15 +1,28 @@
+from collections import Counter
+coordinates = []
 with open("inputs/day5.txt") as file:
-    nums = [int(num) for num in file.readlines()]
-    # boards = []
-    # for board in file.read().split("\n\n"):
-    #     current_board = []
-    #     for line in board.strip().split("\n"):
-    #         current_board.append([int(num) for num in line.strip().split(" ") if num != ""])
-    #     boards.append(current_board)
+    for line in file.readlines():
+        start, end = line.strip().split(" -> ")
+        coordinates.append([list(map(int, start.split(","))), list(map(int, end.split(",")))])
 
 
 def part_1():
-    pass
+    seen = Counter()
+    passed_more_than_once = 0
+    for start, end in coordinates:
+        if end[0] == start[0]:
+            for i in range(min(end[1],start[1]), max(end[1],start[1]) + 1):
+                current_point = (end[0], i)
+                seen[current_point] += 1
+                if seen[current_point] == 2:
+                    passed_more_than_once += 1
+        elif end[1] == start[1]:
+            for i in range(min(end[0],start[0]), max(end[0],start[0]) + 1):
+                current_point = (i, end[1])
+                seen[current_point] += 1
+                if seen[current_point] == 2:
+                    passed_more_than_once += 1
+    return passed_more_than_once
 
 
 def part_2():
