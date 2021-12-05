@@ -5,23 +5,27 @@ with open("inputs/day5.txt") as file:
         start, end = line.strip().split(" -> ")
         coordinates.append([list(map(int, start.split(","))), list(map(int, end.split(",")))])
 
+def update_seen(start: int, end: int, update_x: bool, other_coordinate: int, seen: Counter) -> int:
+    """Returns number coordinates that were passed more than once after this run"""
+    passed_more_than_once = 0
+    for i in range(start, end):
+        if update_x:
+            current_point = (i, other_coordinate)
+        else:
+            current_point = (other_coordinate, i)
+        seen[current_point] += 1
+        if seen[current_point] == 2:
+            passed_more_than_once += 1
+    return passed_more_than_once
 
 def part_1():
     seen = Counter()
     passed_more_than_once = 0
     for start, end in coordinates:
         if end[0] == start[0]:
-            for i in range(min(end[1],start[1]), max(end[1],start[1]) + 1):
-                current_point = (end[0], i)
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
+            passed_more_than_once += update_seen(min(end[1],start[1]), max(end[1],start[1]) + 1, False, start[0], seen)
         elif end[1] == start[1]:
-            for i in range(min(end[0],start[0]), max(end[0],start[0]) + 1):
-                current_point = (i, end[1])
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
+            passed_more_than_once += update_seen(min(end[0],start[0]), max(end[0],start[0]) + 1, True, start[1], seen)
     return passed_more_than_once
 
 
@@ -30,17 +34,9 @@ def part_2():
     passed_more_than_once = 0
     for start, end in coordinates:
         if end[0] == start[0]:
-            for i in range(min(end[1],start[1]), max(end[1],start[1]) + 1):
-                current_point = (end[0], i)
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
+            passed_more_than_once += update_seen(min(end[1],start[1]), max(end[1],start[1]) + 1, False, start[0], seen)
         elif end[1] == start[1]:
-            for i in range(min(end[0],start[0]), max(end[0],start[0]) + 1):
-                current_point = (i, end[1])
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
+            passed_more_than_once += update_seen(min(end[0],start[0]), max(end[0],start[0]) + 1, True, start[1], seen)
         else:
             current_x = start[0]
             current_y = start[1]
