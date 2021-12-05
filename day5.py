@@ -10,7 +10,7 @@ with open("inputs/day5.txt") as file:
         coordinates.append(((int(start_x), int(start_y)), (int(end_x), int(end_y))))
 
 
-def count_passed_multiple_times(include_diagonals: bool):
+def count_passed_multiple_times(skip_diagonals: bool):
     seen = Counter()
     passed_more_than_once = 0
     for start, end in coordinates:
@@ -20,7 +20,7 @@ def count_passed_multiple_times(include_diagonals: bool):
         current_y = start[1]
         increase_x = 0 if x_difference == 0 else (1 if x_difference > 0 else -1)
         increase_y = 0 if y_difference == 0 else (1 if y_difference > 0 else -1)
-        if x_difference != 0 and y_difference != 0 and not include_diagonals:
+        if x_difference != 0 and y_difference != 0 and skip_diagonals:
             continue
         while (current_x != end[0] + increase_x) or (current_y != end[1] + increase_y):
             seen[(current_x, current_y)] += 1
@@ -32,11 +32,11 @@ def count_passed_multiple_times(include_diagonals: bool):
 
 
 def part_1():
-    return count_passed_multiple_times(False)
+    return count_passed_multiple_times(True)
 
 
 def part_2():
-    return count_passed_multiple_times(True)
+    return count_passed_multiple_times(False)
 
 
 print(f"Part 1: {part_1()}")
