@@ -7,7 +7,7 @@ with open("inputs/day5.txt") as file:
         coordinates.append([list(map(int, start.split(","))), list(map(int, end.split(",")))])
 
 
-def update_seen(start: int, end: int, update_x: bool, other_coordinate: int, seen: Counter) -> int:
+def get_new_passed_multiple_times(start: int, end: int, update_x: bool, other_coordinate: int, seen: Counter) -> int:
     """Returns number coordinates that were passed more than once after this run"""
     passed_more_than_once = 0
     for i in range(start, end + 1):
@@ -27,11 +27,11 @@ def count_passed_multiple_times(include_diagonals: bool):
         if end[0] == start[0]:
             starting_y = min(end[1], start[1])
             ending_y = max(end[1], start[1])
-            passed_more_than_once += update_seen(starting_y, ending_y, False, start[0], seen)
+            passed_more_than_once += get_new_passed_multiple_times(starting_y, ending_y, False, start[0], seen)
         elif end[1] == start[1]:
             starting_x = min(end[0], start[0])
             ending_x = max(end[0], start[0])
-            passed_more_than_once += update_seen(starting_x, ending_x, True, start[1], seen)
+            passed_more_than_once += get_new_passed_multiple_times(starting_x, ending_x, True, start[1], seen)
         elif include_diagonals:
             current_x = start[0]
             current_y = start[1]
