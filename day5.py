@@ -7,43 +7,24 @@ with open("inputs/day5.txt") as file:
         coordinates.append([list(map(int, start.split(","))), list(map(int, end.split(",")))])
 
 
-def get_new_passed_multiple_times(start: int, end: int, update_x: bool, other_coordinate: int, seen: Counter) -> int:
-    """Returns number coordinates that were passed more than once after this run"""
-    passed_more_than_once = 0
-    for i in range(start, end + 1):
-        if update_x:
-            current_point = (i, other_coordinate)
-        else:
-            current_point = (other_coordinate, i)
-        seen[current_point] += 1
-        if seen[current_point] == 2:
-            passed_more_than_once += 1
-    return passed_more_than_once
-
 def count_passed_multiple_times(include_diagonals: bool):
     seen = Counter()
     passed_more_than_once = 0
     for start, end in coordinates:
-        if end[0] == start[0]:
-            starting_y = min(end[1], start[1])
-            ending_y = max(end[1], start[1])
-            passed_more_than_once += get_new_passed_multiple_times(starting_y, ending_y, False, start[0], seen)
-        elif end[1] == start[1]:
-            starting_x = min(end[0], start[0])
-            ending_x = max(end[0], start[0])
-            passed_more_than_once += get_new_passed_multiple_times(starting_x, ending_x, True, start[1], seen)
-        elif include_diagonals:
-            current_x = start[0]
-            current_y = start[1]
-            increase_by_x = 1 if end[0] > start[0] else -1
-            increase_by_y = 1 if end[1] > start[1] else -1
-            while current_x != end[0] + increase_by_x and current_y != end[1] + increase_by_y:
-                current_point = (current_x, current_y)
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
-                current_x += increase_by_x
-                current_y += increase_by_y
+        difference_x = end[0] -start[0]
+        difference_y = end[1] -start[1]
+        current_x = start[0]
+        current_y = start[1]
+        increase_x = 0 if difference_x == 0 else (1 if difference_x > 0 else -1)
+        increase_y = 0 if difference_y == 0 else (1 if difference_y > 0 else -1)
+        if difference_x != 0 and difference_y != 0 and not include_diagonals:
+            continue
+        while current_x != end[0] + increase_x or current_y != end[1] + increase_y:
+            seen[(current_x, current_y)] += 1
+            if seen[(current_x, current_y)] == 2:
+                passed_more_than_once += 1
+            current_x += (0 if difference_x == 0 else (1 if difference_x > 0 else -1))
+            current_y += (0 if difference_y == 0 else (1 if difference_y > 0 else -1))
     return passed_more_than_once
 
 def part_1():
