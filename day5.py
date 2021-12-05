@@ -29,19 +29,7 @@ def part_2():
     seen = Counter()
     passed_more_than_once = 0
     for start, end in coordinates:
-        if start[0] != end[0] and start[1] != end[1]:
-            current_x = start[0]
-            current_y = start[1]
-            increase_by_x = 1 if end[0] > start[0] else -1
-            increase_by_y = 1 if end[1] > start[1] else -1
-            while current_x != end[0] + increase_by_x and current_y != end[1] + increase_by_y:
-                current_point = (current_x, current_y)
-                seen[current_point] += 1
-                if seen[current_point] == 2:
-                    passed_more_than_once += 1
-                current_x += increase_by_x
-                current_y += increase_by_y
-        elif end[0] == start[0]:
+        if end[0] == start[0]:
             for i in range(min(end[1],start[1]), max(end[1],start[1]) + 1):
                 current_point = (end[0], i)
                 seen[current_point] += 1
@@ -53,7 +41,18 @@ def part_2():
                 seen[current_point] += 1
                 if seen[current_point] == 2:
                     passed_more_than_once += 1
-
+        else:
+            current_x = start[0]
+            current_y = start[1]
+            increase_by_x = 1 if end[0] > start[0] else -1
+            increase_by_y = 1 if end[1] > start[1] else -1
+            while current_x != end[0] + increase_by_x and current_y != end[1] + increase_by_y:
+                current_point = (current_x, current_y)
+                seen[current_point] += 1
+                if seen[current_point] == 2:
+                    passed_more_than_once += 1
+                current_x += increase_by_x
+                current_y += increase_by_y
     return passed_more_than_once
 
 print(f"Part 1: {part_1()}")
