@@ -20,8 +20,7 @@ def update_seen(start: int, end: int, update_x: bool, other_coordinate: int, see
             passed_more_than_once += 1
     return passed_more_than_once
 
-
-def part_1():
+def count_passed_multiple_times(include_diagonals: bool):
     seen = Counter()
     passed_more_than_once = 0
     for start, end in coordinates:
@@ -33,22 +32,7 @@ def part_1():
             starting_x = min(end[0], start[0])
             ending_x = max(end[0], start[0])
             passed_more_than_once += update_seen(starting_x, ending_x, True, start[1], seen)
-    return passed_more_than_once
-
-
-def part_2():
-    seen = Counter()
-    passed_more_than_once = 0
-    for start, end in coordinates:
-        if end[0] == start[0]:
-            starting_y = min(end[1], start[1])
-            ending_y = max(end[1], start[1])
-            passed_more_than_once += update_seen(starting_y, ending_y, False, start[0], seen)
-        elif end[1] == start[1]:
-            starting_x = min(end[0], start[0])
-            ending_x = max(end[0], start[0])
-            passed_more_than_once += update_seen(starting_x, ending_x, True, start[1], seen)
-        else:
+        elif include_diagonals:
             current_x = start[0]
             current_y = start[1]
             increase_by_x = 1 if end[0] > start[0] else -1
@@ -61,6 +45,12 @@ def part_2():
                 current_x += increase_by_x
                 current_y += increase_by_y
     return passed_more_than_once
+
+def part_1():
+    return count_passed_multiple_times(False)
+
+def part_2():
+    return count_passed_multiple_times(True)
 
 
 print(f"Part 1: {part_1()}")
