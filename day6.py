@@ -1,35 +1,26 @@
+from collections import Counter
 import sys
 
 input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day6.txt"
 with open(input_file) as file:
     nums = [int(num) for num in file.read().split(",")]
 
-def part_1():
-    counts = [0 for i in range(9)]
-    for num in nums:
-        counts[num] += 1
-    for _ in range(80):
-        updated = [0 for _ in range(9)]
+def calculate_lanternfish(days):
+    counts = Counter(nums)
+    for _ in range(days):
+        updated = Counter()
         for i in range(1, 9):
-            updated[i - 1] += counts[i]
-        updated[8] += counts[0]
+            updated[i - 1] = counts[i]
+        updated[8] = counts[0]
         updated[6] += counts[0]
         counts = updated
-    return sum(counts)
+    return sum(counts.values())
 
+def part_1():
+    return calculate_lanternfish(80)
 
 def part_2():
-    counts = [0 for _ in range(9)]
-    for num in nums:
-        counts[num] += 1
-    for _ in range(256):
-        updated = [0 for i in range(9)]
-        for i in range(1, 9):
-            updated[i - 1] += counts[i]
-        updated[8] += counts[0]
-        updated[6] += counts[0]
-        counts = updated
-    return sum(counts)
+    return calculate_lanternfish(256)
 
 
 print(f"Part 1: {part_1()}")
