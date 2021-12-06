@@ -1,6 +1,8 @@
-with open("inputs/day6.txt") as file:
-    nums = [int(num) for num in file.readlines()]
+import sys
 
+input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day6.txt"
+with open(input_file) as file:
+    nums = [int(num) for num in file.readlines()]
 
 def part_1():
     pass
