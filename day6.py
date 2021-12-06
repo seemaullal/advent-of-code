@@ -11,8 +11,10 @@ def calculate_lanternfish(days):
         previous_zero_count = counts[0]
         for i in range(1, 9):
             counts[i - 1] = counts[i]
-        counts[8] = previous_zero_count
+        # all 0 timers regenerate to 6 so add those to the 6 total
         counts[6] += previous_zero_count
+        # all 0 timers create a timer with time 8
+        counts[8] = previous_zero_count
     return sum(counts.values())
 
 def part_1():
