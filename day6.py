@@ -8,12 +8,11 @@ with open(input_file) as file:
 def calculate_lanternfish(days):
     counts = Counter(nums)
     for _ in range(days):
-        updated = Counter()
+        original_zero = counts[0]
         for i in range(1, 9):
-            updated[i - 1] = counts[i]
-        updated[8] = counts[0]
-        updated[6] += counts[0]
-        counts = updated
+            counts[i - 1] = counts[i]
+        counts[8] = original_zero
+        counts[6] += original_zero
     return sum(counts.values())
 
 def part_1():
