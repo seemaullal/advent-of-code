@@ -8,18 +8,15 @@ with open(input_file) as file:
 def part_1():
     sorted_positions = sorted(nums)
     midpoint = sorted_positions[len(sorted_positions) // 2]
-    cost = 0
-    for num in nums:
-        cost += abs(num - midpoint)
-    return cost
+    return sum([abs(num - midpoint) for num in nums])
 
 
 def part_2():
     minimum_cost = None
-    for horizontal_position in range(max(nums) + 1):
+    for position1 in range(max(nums) + 1):
         current_cost = 0
-        for second_num in nums:
-            distance = abs(second_num - horizontal_position)
+        for position2 in nums:
+            distance = abs(position1 - position2)
             # sum of numbers from 1 to N is N * (N+1) / 2
             # the one math formula I remember and is sometimes useful!
             current_cost += (distance) * (distance + 1) // 2
