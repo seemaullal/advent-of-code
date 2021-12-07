@@ -1,9 +1,8 @@
-from collections import Counter
 import sys
 
 input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day7.txt"
 with open(input_file) as file:
-    nums = [int(num) for num in file.readline().strip().split(',')]
+    nums = [int(num) for num in file.readline().strip().split(",")]
 
 
 def part_1():
@@ -21,7 +20,9 @@ def part_2():
         current_cost = 0
         for second_num in nums:
             distance = abs(second_num - horizontal_position)
-            current_cost += (distance)*(distance + 1) // 2
+            # sum of numbers from 1 to N is N * (N+1) / 2
+            # the one math formula I remember and is sometimes useful!
+            current_cost += (distance) * (distance + 1) // 2
         if minimum_cost is None or current_cost < minimum_cost:
             minimum_cost = current_cost
     return minimum_cost
