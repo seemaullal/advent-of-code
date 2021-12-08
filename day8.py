@@ -59,11 +59,10 @@ def get_number_mapping(signals):
         elif len(signal) == 5:
             if all([letter in signal for letter in seven_signal]):
                 mapping[signal] = 3
-            else:
-                if len([letter for letter in four_signal if letter in signal]) == 3:
+            elif len([letter for letter in four_signal if letter in signal]) == 3:
                     mapping[signal] = 5
-                else:
-                    mapping[signal] = 2
+            else:
+                mapping[signal] = 2
     return mapping
 
 
