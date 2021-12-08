@@ -87,5 +87,5 @@ def part_2():
     return total
 
 
-print(f"Part 1: {part_1()}\n")
+print(f"Part 1: {part_1()}")
 print(f"Part 2: {part_2()}")
