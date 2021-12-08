@@ -1,11 +1,13 @@
 import sys
 
 input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day8.txt"
-patterns = []
+signals = []
+outputs = []
 with open(input_file) as file:
     for line in file.readlines():
         first, second = line.strip().split(" | ")
-        patterns.append([first.split(), second.split()])
+        signals.append(first.split())
+        outputs.append(second.split())
 
 # DIGITS = {
 #     0: "abcefg",  # 6
@@ -67,15 +69,15 @@ def get_number_mapping(signals):
 
 
 def part_1():
-    return len([signal for signals in patterns for signal in signals[1] if len(signal) in (2, 4, 3, 7)])
+    return len([number for output in outputs for number in output if len(number) in (2, 4, 3, 7)])
 
 
 def part_2():
     total = 0
-    for signals, output in patterns:
-        mapping = get_number_mapping(signals)
+    for current_signals, current_outputs in zip(signals, outputs):
+        mapping = get_number_mapping(current_signals)
         current = ""
-        for combination in output:
+        for combination in current_outputs:
             current += str(mapping[sort_string(combination)])
         total += int(current)
     return total
