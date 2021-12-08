@@ -14,5 +14,5 @@ input_contents = requests.get(
     },
 ).text
 
-with open(f"inputs/day{day_number}.txt", "w") as file:
+with open(f"inputs/{day_number}.txt", "w") as file:
     file.write(input_contents)
