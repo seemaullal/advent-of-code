@@ -60,19 +60,14 @@ def get_number_mapping(signals):
             if all([letter in signal for letter in seven_signal]):
                 mapping[signal] = 3
             elif len([letter for letter in four_signal if letter in signal]) == 3:
-                    mapping[signal] = 5
+                mapping[signal] = 5
             else:
                 mapping[signal] = 2
     return mapping
 
 
 def part_1():
-    total = 0
-    for _signals, output in patterns:
-        for combination in output:
-            if len(combination) in (2, 4, 3, 7):
-                total += 1
-    return total
+    return len([signal for signals in patterns for signal in signals[1] if len(signal) in (2, 4, 3, 7)])
 
 
 def part_2():
