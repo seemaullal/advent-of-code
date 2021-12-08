@@ -9,18 +9,9 @@ with open(input_file) as file:
 
 def part_1():
     total = 0
-    for signals, output in patterns:
-        unique_lengths = set()
-        seen = set()
-        for signal in signals:
-            if len(signal) not in seen:
-                unique_lengths.add(len(signal))
-                seen.add(len(signal))
-            else:
-                if len(signal) in unique_lengths:
-                    unique_lengths.remove(len(signal))
+    for _signals, output in patterns:
         for combination in output:
-            if len(combination) in unique_lengths:
+            if len(combination) in (2,4,3,7):
                 total += 1
     return total
 
