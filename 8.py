@@ -1,6 +1,6 @@
 import sys
 
-input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day8.txt"
+input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/8.txt"
 signals = []
 outputs = []
 with open(input_file) as file:

@@ -1,6 +1,6 @@
 import sys
 
-input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day7.txt"
+input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/7.txt"
 with open(input_file) as file:
     nums = [int(num) for num in file.readline().strip().split(",")]
 

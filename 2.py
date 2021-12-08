@@ -3,7 +3,7 @@ def split_into_parts(command):
     return (direction, int(distance))
 
 
-with open("inputs/day2.txt") as file:
+with open("inputs/2.txt") as file:
     commands = map(split_into_parts, file.readlines())
 
 

@@ -1,7 +1,7 @@
 from collections import Counter
 
 coordinates = []
-with open("inputs/day5.txt") as file:
+with open("inputs/5.txt") as file:
     for line in file.readlines():
         start, end = line.strip().split(" -> ")
         start_x, start_y = start.split(",")

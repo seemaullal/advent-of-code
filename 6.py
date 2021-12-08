@@ -1,7 +1,7 @@
 from collections import Counter
 import sys
 
-input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/day6.txt"
+input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/6.txt"
 with open(input_file) as file:
     nums = [int(num) for num in file.read().split(",")]
 

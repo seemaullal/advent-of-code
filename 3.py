@@ -1,6 +1,6 @@
 from typing import List
 
-with open("inputs/day3.txt") as file:
+with open("inputs/3.txt") as file:
     binary_nums = [num.strip() for num in file.readlines()]
 
 

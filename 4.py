@@ -1,4 +1,4 @@
-with open("inputs/day4.txt") as file:
+with open("inputs/4.txt") as file:
     nums = [int(num.strip()) for num in file.readline().split(",")]
     boards = []
     for board in file.read().split("\n\n"):
