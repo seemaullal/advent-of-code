@@ -7,20 +7,23 @@ with open(input_file) as file:
     for line in file.readlines():
         heights.append([int(height) for height in list(line.strip())])
 
+ROW_NUM = len(heights)
+COL_NUM = len(heights[0])
+
 
 def get_low_point_coordinates():
     low_points = []
-    for row_num in range(len(heights)):
-        for col_num in range(len(heights[0])):
+    for row_num in range(ROW_NUM):
+        for col_num in range(COL_NUM):
             eligible = True
             curr = heights[row_num][col_num]
             if row_num != 0 and heights[row_num - 1][col_num] <= curr:
                 eligible = False
-            if row_num != len(heights) - 1 and heights[row_num + 1][col_num] <= curr:
+            if row_num < ROW_NUM - 1 and heights[row_num + 1][col_num] <= curr:
                 eligible = False
             if col_num != 0 and heights[row_num][col_num - 1] <= curr:
                 eligible = False
-            if col_num != len(heights[0]) - 1 and heights[row_num][col_num + 1] <= curr:
+            if col_num != COL_NUM - 1 and heights[row_num][col_num + 1] <= curr:
                 eligible = False
             if eligible:
                 low_points.append(((row_num, col_num)))
@@ -28,7 +31,7 @@ def get_low_point_coordinates():
 
 
 def traverse_graph(row, col, basin_size, visited):
-    if row < 0 or col < 0 or row == len(visited) or col > len(visited[0]) - 1:
+    if row < 0 or col < 0 or row == ROW_NUM or col == COL_NUM:
         return 0
     if visited[row][col] == "X" or visited[row][col] == 9:
         return 0
