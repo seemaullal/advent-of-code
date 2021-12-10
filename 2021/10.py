@@ -6,33 +6,37 @@ with open(input_file) as file:
     chunks = [list(chunk.strip()) for chunk in file.readlines()]
 
 
-pairs = {
+PAIRS = {
     "(": ")",
     "{": "}",
     "[": "]",
     "<": ">",
 }
 
-scores = {
+SCORE = {
     ")": 3,
     "]": 57,
     "}": 1197,
     ">": 25137,
 }
 
+OPENING = {k for k in PAIRS.keys()}
+
+
 def part_1():
     error_score = 0
     for line in chunks:
         seen = []
         for chunk in line:
-            if chunk in pairs.keys():
+            if chunk in OPENING:
                 seen.append(chunk)
-            elif pairs[seen[-1]] != chunk:
-                    error_score += scores[chunk]
-                    break
+            elif PAIRS[seen[-1]] != chunk:
+                error_score += SCORE[chunk]
+                break
             else:
                 seen.pop()
     return error_score
+
 
 def part_2():
     pass
