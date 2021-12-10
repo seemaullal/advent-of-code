@@ -13,33 +13,52 @@ PAIRS = {
     "<": ">",
 }
 
-SCORE = {
+PART_1_SCORES = {
     ")": 3,
     "]": 57,
     "}": 1197,
     ">": 25137,
 }
 
+PART_2_SCORES = {
+    "(": 1,
+    "[": 2,
+    "{": 3,
+    "<": 4,
+}
+
 OPENING = {k for k in PAIRS.keys()}
 
 
-def part_1():
+def solve_both_parts():
     error_score = 0
+    autocomplete_scores = []
     for line in chunks:
         seen = []
+        bad = False
         for chunk in line:
             if chunk in OPENING:
                 seen.append(chunk)
             elif PAIRS[seen[-1]] != chunk:
-                error_score += SCORE[chunk]
+                error_score += PART_1_SCORES[chunk]
+                bad = True
                 break
             else:
                 seen.pop()
-    return error_score
+        if not bad:
+            current_score = 0
+            for char in reversed(seen):
+                current_score = (current_score * 5) + PART_2_SCORES[char]
+            autocomplete_scores.append(current_score)
+    return error_score, sorted(autocomplete_scores)[len(autocomplete_scores) // 2]
+
+
+def part_1():
+    return solve_both_parts()[0]
 
 
 def part_2():
-    pass
+    return solve_both_parts()[1]
 
 
 print(f"Part 1: {part_1()}")
