@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 
 input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/10.txt"
 with open(input_file) as file:
