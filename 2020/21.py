@@ -40,21 +40,15 @@ def part_1():
 
 def part_2():
     result = {}
-    ingredients_with_allergens = {
-        ingredient: allergens
-        for ingredient, allergens in possible_allergens.items()
-        if len(allergens) > 0
-    }
+    mapped = set()
     while len(result) != len(all_allergens):
-        for ingredient, allergens in ingredients_with_allergens.items():
-            if len(allergens) == 1:
-                result[ingredient] = allergens.pop()
-        for ingredient, allergens in ingredients_with_allergens.items():
-            updated_allergens = set()
-            for allergen in allergens:
-                if allergen not in result.values():
-                    updated_allergens.add(allergen)
-            ingredients_with_allergens[ingredient] = updated_allergens
+        for ingredient, allergens in possible_allergens.items():
+            possibile_allergens = {
+                allergen for allergen in allergens if allergen not in mapped
+            }
+            if len(possibile_allergens) == 1:
+                result[ingredient] = possibile_allergens.pop()
+                mapped.add(result[ingredient])
     return ",".join(sorted(result, key=lambda k: result[k]))
 
 
