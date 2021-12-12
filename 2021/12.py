@@ -30,7 +30,7 @@ def part_1():
 
 
 def part_2():
-    # store node name, small nodes we have seen, and whether we have visited a small node twice
+    # store node name, small nodes seen, and if a small node was visited twice
     current = ("start", {"start"}, False)
     paths = 0
     to_visit = deque([current])
