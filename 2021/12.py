@@ -35,7 +35,7 @@ def part_2():
     paths = 0
     to_visit = deque([current])
     while to_visit:
-        node_name, small_visited, visited_node_twice = to_visit.popleft()
+        node_name, small_visited, small_visited_twice = to_visit.popleft()
         if node_name == "end":
             paths += 1
         else:
@@ -44,8 +44,8 @@ def part_2():
                     updated_small = set(small_visited)
                     if dest.islower():
                         updated_small.add(dest)
-                    to_visit.append((dest, updated_small, visited_node_twice))
-                elif not visited_node_twice and dest not in {"start", "end"}:
+                    to_visit.append((dest, updated_small, small_visited_twice))
+                elif not small_visited_twice and dest not in {"start", "end"}:
                     to_visit.append((dest, small_visited, True))
     return paths
 
