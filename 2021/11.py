@@ -9,13 +9,12 @@ ROW_NUM = len(energy)
 COL_NUM = len(energy[0])
 
 
-def get_adjacent_coordinates(x_coordinate, y_coordinate):
+def get_adjacent_coordinates(x, y):
     adjacent = []
-    for x_dir, y_dir in ((-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)):
-        current_x = x_coordinate + x_dir
-        current_y = y_coordinate + y_dir
-        if 0 <= current_x < ROW_NUM and 0 <= current_y < COL_NUM:
-            adjacent.append((current_x, current_y))
+    for x_dir in (-1, 0, 1):
+        for y_dir in (-1, 0, 1):
+            if 0 <= x + x_dir < ROW_NUM and 0 <= y + y_dir < COL_NUM:
+                adjacent.append((x + x_dir, y + y_dir))
     return adjacent
 
 
@@ -38,10 +37,10 @@ def solve_both_parts():
                     if current_energy[row_num][col_num] > 9:
                         num_flashes += 1
                         current_energy[row_num][col_num] = 0
-                        for x_coord, y_coord in get_adjacent_coordinates(row_num, col_num):
-                            if current_energy[x_coord][y_coord] != 0:
-                                current_energy[x_coord][y_coord] += 1
-                            if current_energy[x_coord][y_coord] > 9:
+                        for x, y in get_adjacent_coordinates(row_num, col_num):
+                            if current_energy[x][y] != 0:
+                                current_energy[x][y] += 1
+                            if current_energy[x][y] > 9:
                                 still_flashing = True
         current_step += 1
     return flashes_after_hundred_steps, current_step
@@ -52,6 +51,7 @@ def all_flashing(energy):
         if any([cell for cell in row if cell != 0]):
             return False
     return True
+
 
 def part_1():
     return solve_both_parts()[0]
