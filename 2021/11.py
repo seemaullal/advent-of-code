@@ -1,4 +1,5 @@
 import sys
+from copy import deepcopy
 
 input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/11.txt"
 with open(input_file) as file:
@@ -19,27 +20,28 @@ def get_adjacent_coordinates(x_coordinate, y_coordinate):
 
 
 def solve_both_parts():
+    current_energy = deepcopy(energy)
     flashes_after_hundred_steps = None
     num_flashes = 0
     current_step = 0
-    while current_step < 100 or not all_flashing(energy):
+    while current_step < 100 or not all_flashing(current_energy):
         if current_step == 100:
             flashes_after_hundred_steps = num_flashes
-        for row_num in range(len(energy)):
-            for col_num in range(len(energy[row_num])):
-                energy[row_num][col_num] += 1
+        for row_num in range(ROW_NUM):
+            for col_num in range(COL_NUM):
+                current_energy[row_num][col_num] += 1
         still_flashing = True
         while still_flashing:
             still_flashing = False
-            for row_num in range(len(energy)):
-                for col_num in range(len(energy[row_num])):
-                    if energy[row_num][col_num] > 9:
+            for row_num in range(ROW_NUM):
+                for col_num in range(COL_NUM):
+                    if current_energy[row_num][col_num] > 9:
                         num_flashes += 1
-                        energy[row_num][col_num] = 0
+                        current_energy[row_num][col_num] = 0
                         for x_coord, y_coord in get_adjacent_coordinates(row_num, col_num):
-                            if energy[x_coord][y_coord] != 0:
-                                energy[x_coord][y_coord] += 1
-                            if energy[x_coord][y_coord] > 9:
+                            if current_energy[x_coord][y_coord] != 0:
+                                current_energy[x_coord][y_coord] += 1
+                            if current_energy[x_coord][y_coord] > 9:
                                 still_flashing = True
         current_step += 1
     return flashes_after_hundred_steps, current_step
@@ -51,16 +53,12 @@ def all_flashing(energy):
             return False
     return True
 
-
-part_1_answer, part_2_answer = solve_both_parts()
-
-
 def part_1():
-    return part_1_answer
+    return solve_both_parts()[0]
 
 
 def part_2():
-    return part_2_answer
+    return solve_both_parts()[1]
 
 
 print(f"Part 1: {part_1()}")
