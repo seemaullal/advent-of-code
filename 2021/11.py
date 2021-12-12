@@ -18,9 +18,13 @@ def get_adjacent_coordinates(x_coordinate, y_coordinate):
     return adjacent
 
 
-def part_1():
+def solve_both_parts():
+    flashes_after_hundred_steps = None
     num_flashes = 0
-    for _ in range(100):
+    current_step = 0
+    while current_step < 100 or not all_flashing(energy):
+        if current_step == 100:
+            flashes_after_hundred_steps = num_flashes
         for row_num in range(len(energy)):
             for col_num in range(len(energy[row_num])):
                 energy[row_num][col_num] += 1
@@ -37,11 +41,26 @@ def part_1():
                                 energy[x_coord][y_coord] += 1
                             if energy[x_coord][y_coord] > 9:
                                 still_flashing = True
-    return num_flashes
+        current_step += 1
+    return flashes_after_hundred_steps, current_step
+
+
+def all_flashing(energy):
+    for row in energy:
+        if any([cell for cell in row if cell != 0]):
+            return False
+    return True
+
+
+part_1_answer, part_2_answer = solve_both_parts()
+
+
+def part_1():
+    return part_1_answer
 
 
 def part_2():
-    pass
+    return part_2_answer
 
 
 print(f"Part 1: {part_1()}")
