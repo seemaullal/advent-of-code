@@ -38,15 +38,15 @@ def part_2():
         node_name, small_visited, visited_node_twice = to_visit.popleft()
         if node_name == "end":
             paths += 1
-            continue
-        for dest in graph[node_name]:
-            if dest not in small_visited:
-                updated_small = set(small_visited)
-                if dest.islower():
-                    updated_small.add(dest)
-                to_visit.append((dest, updated_small, visited_node_twice))
-            elif not visited_node_twice and dest not in {"start", "end"}:
-                to_visit.append((dest, small_visited, True))
+        else:
+            for dest in graph[node_name]:
+                if dest not in small_visited:
+                    updated_small = set(small_visited)
+                    if dest.islower():
+                        updated_small.add(dest)
+                    to_visit.append((dest, updated_small, visited_node_twice))
+                elif not visited_node_twice and dest not in {"start", "end"}:
+                    to_visit.append((dest, small_visited, True))
     return paths
 
 
