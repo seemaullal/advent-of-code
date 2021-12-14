@@ -44,7 +44,7 @@ def part_1():
     grid = get_grid()
     for direction, location in folds[:1]:
         grid = fold_grid(direction, location, grid)
-    return len([col for row in grid for col in row if col == '#'])
+    return len([col for row in grid for col in row if col == "#"])
 
 
 def part_2():
@@ -52,7 +52,7 @@ def part_2():
     for direction, location in folds:
         grid = fold_grid(direction, location, grid)
     for row in grid:
-        print("".join(map(lambda cell: cell if cell == "#" else " ", row)))
+        print("".join(map(lambda cell: "█" if cell == "#" else " ", row)))
 
 
 print(f"Part 1: {part_1()}")
