@@ -13,52 +13,42 @@ with open(input_file) as file:
         folds.append((directions[-1], int(location)))
 
 
-def get_grid():
-    max_x = max([coordinate[0] for coordinate in coordinates])
-    max_y = max([coordinate[1] for coordinate in coordinates])
-    grid = [["." for _ in range(max_x + 1)] for _ in range(max_y + 1)]
-    for x, y in coordinates:
-        grid[y][x] = "#"
-    return grid
+def get_points():
+    return {(x, y) for x, y in coordinates}
 
-
-def fold_grid(direction, location, current_grid):
+def fold_grid(direction, location, current_points):
+    new_points = set()
     if direction == "x":
-        new_grid = []
-        for row in current_grid:
-            new_row = row[:location]
-            for col_num in range(location):
-                if row[len(row) - col_num - 1] == "#":
-                    new_row[col_num] = "#"
-            new_grid.append(new_row)
+        for x, y in current_points:
+            if x > location:
+                new_points.add((2 * location - x, y))
+            elif x < location:
+                new_points.add((x, y))
     else:
-        for row_num in range(location, len(current_grid)):
-            for col_num in range(len(current_grid[0])):
-                if current_grid[row_num][col_num] == "#":
-                    current_grid[location - (row_num - location)][col_num] = "#"
-        new_grid = current_grid[:location]
-    return new_grid
-
+        assert direction == "y"
+        for x, y in current_points:
+            if y > location:
+                new_points.add((x, 2 * location - y))
+            elif y < location:
+                new_points.add((x, y))
+    return new_points
 
 def part_1():
-    grid = get_grid()
+    points = get_points()
     for direction, location in folds[:1]:
-        grid = fold_grid(direction, location, grid)
-    ans = 0
-    for row in grid:
-        for col in row:
-            if col == "#":
-                ans += 1
-    return ans
+        points = fold_grid(direction, location, points)
+    return len(points)
 
 
 def part_2():
-    grid = get_grid()
+    points = get_points()
     for direction, location in folds:
-        grid = fold_grid(direction, location, grid)
-    for row in grid:
-        print("".join(map(lambda cell: cell if cell == "#" else " ", row)))
-
+        points = fold_grid(direction, location, points)
+    for row in range(max([y for (x,y) in points]) + 1):
+        line = ""
+        for col in range(max([x for (x,y) in points]) + 1):
+            line += "#" if (col, row) in points else " "
+        print(line)
 
 print(f"Part 1: {part_1()}")
 print(f"Part 2: {part_2()}")
