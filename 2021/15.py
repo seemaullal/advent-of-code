@@ -7,6 +7,18 @@ with open(input_file) as file:
 
 ROW_NUM = len(risk_levels)
 COL_NUM = len(risk_levels[0])
+LARGER_MAP_ROWS = ROW_NUM * 5
+LARGER_MAP_COLS = COL_NUM * 5
+
+
+def get_larger_map():
+    larger_map = [[None for _ in range(LARGER_MAP_COLS)] for _ in range(LARGER_MAP_ROWS)]
+    for i in range(5 * ROW_NUM):
+        for j in range(5 * COL_NUM):
+            current = risk_levels[i % ROW_NUM][j % COL_NUM] + i // ROW_NUM + j // COL_NUM
+            current = current % 9 if current > 9 else current
+            larger_map[i][j] = current
+    return larger_map
 
 
 def part_1():
@@ -31,7 +43,29 @@ def part_1():
 
 
 def part_2():
-    pass
+    larger_map = get_larger_map()
+    distances = {(x, y): float("inf") for x in range(LARGER_MAP_ROWS) for y in range(LARGER_MAP_COLS)}
+    distances[(0, 0)] = 0
+    pq = [(0, (0, 0))]
+    while True:
+        current_distance, current_coordinate = heappop(pq)
+        current_row, current_col = current_coordinate
+        if current_row == LARGER_MAP_ROWS - 1 and current_col == LARGER_MAP_COLS - 1:
+            return current_distance
+        neighbors = []
+        if current_row != 0:
+            neighbors.append((current_row - 1, current_col))
+        if current_col != 0:
+            neighbors.append((current_row, current_col - 1))
+        if current_row != LARGER_MAP_ROWS - 1:
+            neighbors.append((current_row + 1, current_col))
+        if current_col != LARGER_MAP_COLS - 1:
+            neighbors.append((current_row, current_col + 1))
+        for n_x, n_y in neighbors:
+            potential_distance = current_distance + larger_map[n_x][n_y]
+            if potential_distance < distances[(n_x, n_y)]:
+                distances[(n_x, n_y)] = potential_distance
+                heappush(pq, (potential_distance, (n_x, n_y)))
 
 
 print(f"Part 1: {part_1()}")
