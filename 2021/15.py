@@ -21,49 +21,38 @@ def get_larger_map():
     return larger_map
 
 
-def part_1():
-    distances = {(row, col): float("inf") for row in range(ROW_NUM) for col in range(COL_NUM)}
-    to_visit_priority_queue = []
-    heappush(to_visit_priority_queue, (0, (0, 0)))
+def find_shortest_path(graph):
+    row_num = len(graph)
+    col_num = len(graph[0])
+    to_visit = [(0, (0, 0))]
+    distances = {(i, j): float("inf") for j in range(col_num) for i in range(row_num)}
     while True:
-        current_distance, current_coordinates = heappop(to_visit_priority_queue)
-        current_row, current_col = current_coordinates
-        neighbors = []
-        if current_row == ROW_NUM - 1 and current_col == COL_NUM - 1:
+        current_distance, coordinates = heappop(to_visit)
+        current_row, current_col = coordinates
+        if current_row == row_num - 1 and current_col == col_num - 1:
             return current_distance
-        if current_row != ROW_NUM - 1:
-            neighbors.append((current_row + 1, current_col))
-        if current_col != COL_NUM - 1:
-            neighbors.append((current_row, current_col + 1))
-        for neighbor_row, neighbor_col in neighbors:
-            tentative_risk_level = current_distance + risk_levels[neighbor_row][neighbor_col]
-            if tentative_risk_level < distances[(neighbor_row, neighbor_col)]:
-                distances[(neighbor_row, neighbor_col)] = tentative_risk_level
-                heappush(to_visit_priority_queue, (tentative_risk_level, (neighbor_row, neighbor_col)))
+        possible_neighbors = [
+            (current_row - 1, current_col),
+            (current_row + 1, current_col),
+            (current_row, current_col - 1),
+            (current_row, current_col + 1),
+        ]
+        for neighbor_row, neighbor_col in possible_neighbors:
+            if neighbor_row < 0 or neighbor_col < 0 or neighbor_row >= row_num or neighbor_col >= col_num:
+                continue
+            potential_distance = current_distance + graph[neighbor_row][neighbor_col]
+            if potential_distance < distances[(neighbor_row, neighbor_col)]:
+                distances[(neighbor_row, neighbor_col)] = potential_distance
+                heappush(to_visit, (potential_distance, ((neighbor_row, neighbor_col))))
+
+
+def part_1():
+    return find_shortest_path(risk_levels)
 
 
 def part_2():
     larger_map = get_larger_map()
-    distances = {(x, y): float("inf") for x in range(LARGER_MAP_ROWS) for y in range(LARGER_MAP_COLS)}
-    distances[(0, 0)] = 0
-    to_visit = [(0, (0, 0))]
-    while True:
-        current_distance, current_coordinate = heappop(to_visit)
-        current_row, current_col = current_coordinate
-        if current_row == LARGER_MAP_ROWS - 1 and current_col == LARGER_MAP_COLS - 1:
-            return current_distance
-        neighbors = [
-            (current_row - 1, current_col),
-            (current_row, current_col - 1),
-            (current_row + 1, current_col),
-            (current_row, current_col + 1),
-        ]
-        for n_x, n_y in neighbors:
-            if 0 <= n_x < LARGER_MAP_ROWS and 0 <= n_y < LARGER_MAP_COLS:
-                potential_distance = current_distance + larger_map[n_x][n_y]
-                if potential_distance < distances[(n_x, n_y)]:
-                    distances[(n_x, n_y)] = potential_distance
-                    heappush(to_visit, (potential_distance, (n_x, n_y)))
+    return find_shortest_path(larger_map)
 
 
 print(f"Part 1: {part_1()}")
