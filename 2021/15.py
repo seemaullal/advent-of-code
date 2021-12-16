@@ -46,26 +46,24 @@ def part_2():
     larger_map = get_larger_map()
     distances = {(x, y): float("inf") for x in range(LARGER_MAP_ROWS) for y in range(LARGER_MAP_COLS)}
     distances[(0, 0)] = 0
-    pq = [(0, (0, 0))]
+    to_visit = [(0, (0, 0))]
     while True:
-        current_distance, current_coordinate = heappop(pq)
+        current_distance, current_coordinate = heappop(to_visit)
         current_row, current_col = current_coordinate
         if current_row == LARGER_MAP_ROWS - 1 and current_col == LARGER_MAP_COLS - 1:
             return current_distance
-        neighbors = []
-        if current_row != 0:
-            neighbors.append((current_row - 1, current_col))
-        if current_col != 0:
-            neighbors.append((current_row, current_col - 1))
-        if current_row != LARGER_MAP_ROWS - 1:
-            neighbors.append((current_row + 1, current_col))
-        if current_col != LARGER_MAP_COLS - 1:
-            neighbors.append((current_row, current_col + 1))
+        neighbors = [
+            (current_row - 1, current_col),
+            (current_row, current_col - 1),
+            (current_row + 1, current_col),
+            (current_row, current_col + 1),
+        ]
         for n_x, n_y in neighbors:
-            potential_distance = current_distance + larger_map[n_x][n_y]
-            if potential_distance < distances[(n_x, n_y)]:
-                distances[(n_x, n_y)] = potential_distance
-                heappush(pq, (potential_distance, (n_x, n_y)))
+            if 0 <= n_x < LARGER_MAP_ROWS and 0 <= n_y < LARGER_MAP_COLS:
+                potential_distance = current_distance + larger_map[n_x][n_y]
+                if potential_distance < distances[(n_x, n_y)]:
+                    distances[(n_x, n_y)] = potential_distance
+                    heappush(to_visit, (potential_distance, (n_x, n_y)))
 
 
 print(f"Part 1: {part_1()}")
