@@ -6,7 +6,7 @@ with open(input_file) as file:
     x_start, x_end, y_start, y_end = map(int, re.findall(r"-?\d+", file.read()))
 
 
-def calculate_max_y(x_velocity, y_velocity):
+def calculate_path_to_target(x_velocity, y_velocity):
     x, y = 0, 0
     max_y = float("-inf")
     while x < x_end and y > y_start:
@@ -19,19 +19,26 @@ def calculate_max_y(x_velocity, y_velocity):
         x_velocity = x_velocity - 1 if x_velocity > 0 else 0
         y_velocity -= 1
     # never reached the target area
-    return float("-inf")
+    return None
 
+
+def calculate_possibilities():
+    possibilities = set()
+    for x_velocity in range(x_end + 1):
+        for y_velocity in range(y_start, 2000):
+            possible_path = calculate_path_to_target(x_velocity, y_velocity)
+            if possible_path is not None:
+                possibilities.add((possible_path, x_velocity, y_velocity))
+    return possibilities
+
+possibilities = calculate_possibilities()
 
 def part_1():
-    possible_y_values = set()
-    for x_velocity in range(x_end + 1):
-        for y_velocity in range(y_start, 1000):
-            possible_y_values.add(calculate_max_y(x_velocity, y_velocity))
-    return max(possible_y_values)
+    return max({max_y for max_y, _, _ in possibilities})
 
 
 def part_2():
-    pass
+    return len(possibilities)
 
 
 print(f"Part 1: {part_1()}")
