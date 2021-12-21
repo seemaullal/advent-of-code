@@ -41,6 +41,7 @@ def part_2():
             return (1, 0)
         if p2_score >= 21:
             return (0, 1)
+        # memoize to avoid repeated calculations
         if (p1_pos, p1_score, p2_pos, p2_score) in calculated_already:
             return calculated_already[(p1_pos, p1_score, p2_pos, p2_score)]
         win_totals = (0, 0)
@@ -51,8 +52,9 @@ def part_2():
                     while new_p1_pos > 10:
                         new_p1_pos -= 10
                     new_p1_score = p1_score + new_p1_pos
-                    p1, p2 = calculate_wins(p2_pos, p2_score, new_p1_pos, new_p1_score)
-                    win_totals = (win_totals[0] + p2, win_totals[1] + p1)
+                    # swap the players
+                    new_p2_score, updated_p1 = calculate_wins(p2_pos, p2_score, new_p1_pos, new_p1_score)
+                    win_totals = (win_totals[0] + updated_p1, win_totals[1] + new_p2_score)
 
         calculated_already[(p1_pos, p1_score, p2_pos, p2_score)] = win_totals
         return win_totals
