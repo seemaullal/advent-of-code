@@ -42,7 +42,7 @@ def part_2():
                     while new_p1_pos > 10:
                         new_p1_pos -= 10
                     new_p1_score = p1_score + new_p1_pos
-                    # swap the players
+                    # keep calculating but swap the players
                     new_p2_score, updated_p1 = calculate_wins(p2_pos, p2_score, new_p1_pos, new_p1_score)
                     win_totals = (win_totals[0] + updated_p1, win_totals[1] + new_p2_score)
 
