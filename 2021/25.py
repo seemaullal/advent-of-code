@@ -14,9 +14,7 @@ def part_1():
     current_directions = deepcopy(directions)
     still_moving = True
     while still_moving:
-        new_directions = [
-            [current_directions[row_num][col_num] for col_num in range(COL_NUM)] for row_num in range(ROW_NUM)
-        ]
+        new_directions = deepcopy(current_directions)
         still_moving = False
         for row_num in range(ROW_NUM):
             for col_num in range(COL_NUM):
