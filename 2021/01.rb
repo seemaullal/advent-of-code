@@ -2,8 +2,8 @@
 
 input = File.readlines("#{__dir__}/inputs/1.txt").map(&:to_i)
 part1 = input
-            .each_cons(2)
-            .count { |first, second| first < second }
+        .each_cons(2)
+        .count { |first, second| first < second }
 
 part2 = input.each_cons(3).map(&:sum).each_cons(2).count { |first, second| first < second }
 
