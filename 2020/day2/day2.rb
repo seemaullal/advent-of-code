@@ -1,4 +1,6 @@
-require "ostruct"
+# frozen_string_literal: true
+
+require 'ostruct'
 
 # shared setup
 entries = File.open('day2_input.txt').read.split("\n")
@@ -11,15 +13,15 @@ entry_info = entries.map do |entry|
     password_frequency[char] += 1
   end
   OpenStruct.new({
-    password_frequency: password_frequency,
-    letter: letter,
-    min_amount: min_amount,
-    max_amount: max_amount,
-    password: password
-  })
+                   password_frequency: password_frequency,
+                   letter: letter,
+                   min_amount: min_amount,
+                   max_amount: max_amount,
+                   password: password
+                 })
 end
 
-# part 1 
+# part 1
 valid_entry_count = entry_info.count do |info|
   info.password_frequency[info.letter] >= info.min_amount &&
     info.password_frequency[info.letter] <= info.max_amount
