@@ -2,7 +2,9 @@
 
 require 'set'
 
-input = File.readlines('/Users/seema/p/advent-of-code/2022/inputs/2.txt').map { |line| line.split(' ') }
+path = File.expand_path('../inputs/2.txt', __dir__)
+
+input = File.readlines(path).map { |line| line.split(' ') }
 
 scores = { 'X' => 1, 'Y' => 2, 'Z' => 3 }
 wins = { 'C' => 'X', 'B' => 'Z', 'A' => 'Y' }
