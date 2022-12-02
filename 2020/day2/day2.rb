@@ -13,11 +13,11 @@ entry_info = entries.map do |entry|
     password_frequency[char] += 1
   end
   OpenStruct.new({
-                   password_frequency: password_frequency,
-                   letter: letter,
-                   min_amount: min_amount,
-                   max_amount: max_amount,
-                   password: password
+                   password_frequency:,
+                   letter:,
+                   min_amount:,
+                   max_amount:,
+                   password:
                  })
 end
 
