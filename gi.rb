@@ -22,4 +22,4 @@ request['User-Agent'] = 'github.com/seemaullal/advent-of-code/blob/main/gi.rb by
 response = http.request(request)
 
 File.open("#{directory}/#{day}.txt", 'w') { |f| f.write(response.read_body) }
-# system('open', "https://adventofcode.com/#{year}/day/#{day}")
+system('open', "https://adventofcode.com/#{year}/day/#{day}")
