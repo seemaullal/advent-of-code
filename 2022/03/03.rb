@@ -11,8 +11,8 @@ part1 = input.map { |items| items.chars.each_slice(items.length / 2).to_a }.sum 
   SCORES[(compartment1 & compartment2)[0]]
 end
 
-part2 = input.each_slice(3).sum do |first, second, third|
-  in_common = (first.chars & second.chars & third.chars)[0]
+part2 = input.each_slice(3).map { _1.map(&:chars) }.sum do |first, second, third|
+  in_common = (first & second & third)[0]
   SCORES[in_common]
 end
 
