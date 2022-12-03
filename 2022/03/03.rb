@@ -4,11 +4,10 @@ path = File.expand_path('../inputs/3.txt', __dir__)
 
 input = File.readlines(path, chomp: true)
 
-LOWER_CASE_SCORES = ('a'..'z').map.with_index { |char, index| [char, index + 1] }.to_h
-UPPER_CASE_SCORES = ('A'..'Z').map.with_index { |char, index| [char, index + 27] }.to_h
-SCORES = LOWER_CASE_SCORES.merge(UPPER_CASE_SCORES)
+LOWER_CASE_SCORES = ('a'..'z').each_with_object({}).with_index { |(char, result), index| result[char] = index + 1 }
+SCORES = ('A'..'Z').each_with_object(LOWER_CASE_SCORES).with_index { |(char, result), index| result[char] = index + 27 }
 
-part1 = input.map{ _1.chars.each_slice(_1.length / 2).to_a }.sum do |compartment1, compartment2|
+part1 = input.map { _1.chars.each_slice(_1.length / 2).to_a }.sum do |compartment1, compartment2|
   SCORES[(compartment1 & compartment2)[0]]
 end
 
