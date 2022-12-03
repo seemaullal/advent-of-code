@@ -12,8 +12,7 @@ part1 = input.map { |items| items.chars.each_slice(items.length / 2).to_a }.sum 
 end
 
 part2 = input.each_slice(3).map { _1.map(&:chars) }.sum do |first, second, third|
-  in_common = (first & second & third)[0]
-  SCORES[in_common]
+  SCORES[(first & second & third)[0]]
 end
 
 puts "part 1:  #{part1} "
