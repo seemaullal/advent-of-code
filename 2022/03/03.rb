@@ -8,8 +8,7 @@ LOWER_CASE_SCORES = ('a'..'z').map.with_index { |char, index| [char, index + 1] 
 UPPER_CASE_SCORES = ('A'..'Z').map.with_index { |char, index| [char, index + 27] }.to_h
 SCORES = LOWER_CASE_SCORES.merge(UPPER_CASE_SCORES)
 
-part1 = input.sum do |items|
-  compartment1, compartment2 = items.chars.each_slice(items.length / 2).to_a
+part1 = input.map{ _1.chars.each_slice(_1.length / 2).to_a }.sum do |compartment1, compartment2|
   SCORES[(compartment1 & compartment2)[0]]
 end
 
