@@ -1,6 +1,12 @@
 with open("inputs/3.txt") as file:
     rucksack_items = [list(rucksack.strip()) for rucksack in file]
 
+def get_priority(character):
+    if character.lower() == character:
+        return ord(character) - 96
+    else:
+        return ord(character)-38
+
 def part_1():
     priority_sum = 0
     for items in rucksack_items:
@@ -8,10 +14,7 @@ def part_1():
         compartment1 = set(items[:(item_number//2)])
         compartment2 = set(items[(item_number//2):])
         in_common = compartment1.intersection(compartment2).pop()
-        if in_common.lower() == in_common:
-            priority_sum += ord(in_common) - 96
-        else:
-            priority_sum += ord(in_common)-38
+        priority_sum += get_priority(in_common)
     return priority_sum
 
 def part_2():
@@ -19,10 +22,7 @@ def part_2():
     for group_start_index in range(0, len(rucksack_items)-2, 3):
         group = [set(items) for items in rucksack_items[group_start_index:group_start_index + 3]]
         in_common = group[0].intersection(group[1]).intersection(group[2]).pop()
-        if in_common.lower() == in_common:
-            priority_sum += ord(in_common) - 96
-        else:
-            priority_sum += ord(in_common)-38
+        priority_sum += get_priority(in_common)
     return priority_sum
 
 print(f"Part 1: {part_1()}")
