@@ -18,13 +18,11 @@ def part_1():
 
 
 def part_2():
-    return sum(
-        [
-            1
-            for (elf1_start, elf1_end, elf2_start, elf2_end) in assignments
-            if elf1_end >= elf2_start and elf2_end >= elf1_start
-        ]
-    )
+    count = 0
+    for (elf1_start, elf1_end, elf2_start, elf2_end) in assignments:
+        if elf1_end >= elf2_start and elf2_end >= elf1_start:
+            count += 1
+    return count
 
 
 print(f"Part 1: {part_1()}")
