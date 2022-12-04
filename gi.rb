@@ -4,7 +4,7 @@ require 'fileutils'
 require 'uri'
 require 'net/http'
 
-cookie = ENV['AOC_SESSION']
+cookie = ENV.fetch('AOC_SESSION', nil)
 day = ARGV[0].to_i.to_s # remove leading zeroes
 year = ARGV[1] || 2022
 two_digit_day = format('%02d', day)
@@ -31,5 +31,5 @@ request['Cookie'] = "session=#{cookie}"
 request['User-Agent'] = 'github.com/seemaullal/advent-of-code/blob/main/gi.rb by seemaullal at gmail dot com'
 response = http.request(request)
 
-File.open("#{input_directory}/#{day}.txt", 'w') { |f| f.write(response.read_body) }
+File.write("#{input_directory}/#{day}.txt", response.read_body)
 system('open', "https://adventofcode.com/#{year}/day/#{day}")

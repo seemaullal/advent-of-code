@@ -4,7 +4,7 @@ require 'set'
 
 path = File.expand_path('../inputs/2.txt', __dir__)
 
-input = File.readlines(path).map { |line| line.split(' ') }
+input = File.readlines(path).map(&:split)
 
 scores = { 'X' => 1, 'Y' => 2, 'Z' => 3 }
 wins = { 'C' => 'X', 'B' => 'Z', 'A' => 'Y' }
