@@ -31,5 +31,5 @@ request['Cookie'] = "session=#{cookie}"
 request['User-Agent'] = 'github.com/seemaullal/advent-of-code/blob/main/gi.rb by seemaullal at gmail dot com'
 response = http.request(request)
 
-File.write("#{input_directory}/#{day}.txt", response.read_body)
+File.write("#{input_directory}/#{day}.txt", response.read_body.strip)
 system('open', "https://adventofcode.com/#{year}/day/#{day}")
