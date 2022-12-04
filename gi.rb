@@ -5,11 +5,21 @@ require 'uri'
 require 'net/http'
 
 cookie = ENV['AOC_SESSION']
-day = ARGV[0]
+day = ARGV[0].to_i.to_s # remove leading zeroes
 year = ARGV[1] || 2022
-directory = File.expand_path("#{year}/inputs")
+two_digit_day = format('%02d', day)
+input_directory = File.expand_path("#{year}/inputs")
+solution_directory = File.expand_path("#{year}/#{two_digit_day}")
+template_path = File.expand_path('2022/02')
 
-FileUtils.mkdir(directory) unless File.directory?(directory)
+FileUtils.mkdir(input_directory) unless File.directory?(input_directory)
+FileUtils.mkdir(solution_directory) unless File.directory?(solution_directory)
+unless File.exist?(File.join(solution_directory, "#{two_digit_day}.rb"))
+  FileUtils.cp("#{template_path}/02.rb", "#{solution_directory}/#{two_digit_day}.rb")
+end
+unless File.exist?(File.join(solution_directory, "#{two_digit_day}.py"))
+  FileUtils.cp("#{template_path}/02.py", "#{solution_directory}/#{two_digit_day}.py")
+end
 
 uri = URI("https://adventofcode.com/#{year}/day/#{day}/input")
 http = Net::HTTP.new(uri.host, uri.port)
@@ -21,5 +31,5 @@ request['Cookie'] = "session=#{cookie}"
 request['User-Agent'] = 'github.com/seemaullal/advent-of-code/blob/main/gi.rb by seemaullal at gmail dot com'
 response = http.request(request)
 
-File.open("#{directory}/#{day}.txt", 'w') { |f| f.write(response.read_body) }
+File.open("#{input_directory}/#{day}.txt", 'w') { |f| f.write(response.read_body) }
 system('open', "https://adventofcode.com/#{year}/day/#{day}")
