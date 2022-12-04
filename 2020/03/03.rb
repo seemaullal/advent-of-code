@@ -2,15 +2,13 @@
 
 path = File.expand_path('../inputs/3.txt', __dir__)
 
-GRID = File.readlines(path, chomp: true).map(&:chars)
+GRID = File.readlines(path, chomp: true)
 
 COL_NUMBER = GRID[0].length
 ROW_NUMBER = GRID.length
 
 def calculate_slope_trees(right_amount, down_amount)
-  row_position = 0
-  col_position = 0
-  tree_count = 0
+  row_position = col_position = tree_count = 0
   while row_position < ROW_NUMBER
     actual_col = col_position % COL_NUMBER
     tree_count += 1 if GRID[row_position][actual_col] == '#'
