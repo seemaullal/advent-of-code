@@ -12,7 +12,7 @@ class MissingCookieError < StandardError
   end
 end
 
-cookie = ENV.fetch('AOC_SESSIN', nil)
+cookie = ENV.fetch('AOC_SESSION', nil)
 raise MissingCookieError unless cookie
 
 day = ARGV[0].to_i.to_s # remove leading zeroes
