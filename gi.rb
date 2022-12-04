@@ -4,7 +4,17 @@ require 'fileutils'
 require 'uri'
 require 'net/http'
 
-cookie = ENV.fetch('AOC_SESSION', nil)
+class MissingCookieError < StandardError
+  def initialize(msg = nil)
+    msg ||= 'You must export a value for AOC_SESSION in your environment ' \
+            'for this script to work. See the README for further instructions.'
+    super
+  end
+end
+
+cookie = ENV.fetch('AOC_SESSIN', nil)
+raise MissingCookieError unless cookie
+
 day = ARGV[0].to_i.to_s # remove leading zeroes
 year = ARGV[1] || Time.now.year
 two_digit_day = format('%02d', day)
