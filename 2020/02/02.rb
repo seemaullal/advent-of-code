@@ -3,7 +3,7 @@
 require 'ostruct'
 
 # shared setup
-entries = File.open('day2_input.txt').read.split("\n")
+entries = File.open(File.join(File.dirname(__FILE__), 'day2_input.txt')).read.split("\n")
 entry_info = entries.map do |entry|
   requirements, password = entry.split(':').map(&:strip)
   amounts, letter = requirements.split(' ')
