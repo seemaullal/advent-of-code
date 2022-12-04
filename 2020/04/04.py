@@ -1,9 +1,11 @@
 import re
 
-VALID_PARTS = [
-    set(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]),
-    set(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]),
-]
+VALID_PARTS = set(
+    [
+        frozenset(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]),
+        frozenset(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]),
+    ]
+)
 
 with open("inputs/4.txt") as file:
     whole_file = file.read()
