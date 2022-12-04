@@ -14,7 +14,7 @@ part1 = input_ranges.count do |elf1_range, elf2_range|
 end
 
 part2 = input_ranges.count do |elf1_range, elf2_range|
-  elf1_range.first <= elf2_range.last && elf1_range.last >= elf2_range.first
+  !(elf1_range.last < elf2_range.first || elf2_range.last < elf1_range.first)
 end
 
 puts "part 1:  #{part1} "
