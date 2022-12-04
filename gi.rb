@@ -6,7 +6,7 @@ require 'net/http'
 
 cookie = ENV.fetch('AOC_SESSION', nil)
 day = ARGV[0].to_i.to_s # remove leading zeroes
-year = ARGV[1] || 2022
+year = ARGV[1] || Time.now.year
 two_digit_day = format('%02d', day)
 input_directory = File.expand_path("#{year}/inputs")
 solution_directory = File.expand_path("#{year}/#{two_digit_day}")
