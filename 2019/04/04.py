@@ -1,7 +1,4 @@
-import sys
-
-input_file = sys.argv[1] if len(sys.argv) > 1 else "inputs/4.txt"
-with open(input_file) as file:
+with open("inputs/4.txt") as file:
     start_range, end_range = [int(num) for num in file.read().strip().split("-")]
 
 
