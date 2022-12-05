@@ -13,10 +13,8 @@ def part_1():
             distance = int(path[1:])
             x_move, y_move = MOVES[direction]
             for _ in range(distance):
-                current_position = [
-                    current_position[0] + x_move,
-                    current_position[1] + y_move,
-                ]
+                current_position[0] += x_move
+                current_position[1] += y_move
                 wire_points[wire_index].add(tuple(current_position))
     min_intersection = float("inf")
     for point_x, point_y in wire_points[0].intersection(wire_points[1]):
