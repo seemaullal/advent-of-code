@@ -1,21 +1,27 @@
 # frozen_string_literal: true
 
-require 'pry'
 path = File.expand_path('../inputs/5.txt', __dir__)
 
 start, instructions = File.read(path).split("\n\n")
+
+stack_number = start[-1].to_i
+
 start = start.split("\n").map(&:chars).reverse[1..]
+
 instructions = instructions.split("\n").map do |instruction|
-  instruction.split.filter_map { _1.to_i if _1.to_i.to_s == _1 }
+  instruction.split.filter_map do |character|
+    # only keep numbers
+    character.to_i if character.to_i.to_s == character
+  end
 end
 
-part1 = Array.new(9) { [] }
-part2 = Array.new(9) { [] }
+part1 = Array.new(stack_number) { [] }
+part2 = Array.new(stack_number) { [] }
 
 [part1, part2].each do |part|
   start.each do |line|
-    (1..35).step(4).each_with_index do |v, idx|
-      part[idx].push(line[v]) unless line[v] == ' '
+    (1..line.length).step(4).each_with_index do |v, idx|
+      part[idx].push(line[v]) if line[v] != ' '
     end
   end
 end

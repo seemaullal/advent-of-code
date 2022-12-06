@@ -1,19 +1,19 @@
 with open("inputs/5.txt") as file:
     stack_input, moves = open("inputs/5.txt").read().split("\n\n")
 
+STACK_NUMBER = int(stack_input[-1])
 stack_input = stack_input.split("\n")[:-1][::-1]
-stack_input = [list(stack) for stack in stack_input]
 
-stacks_part_1 = [[] for _ in range(9)]
-stacks_part_2 = [[] for _ in range(9)]
+stacks_part_1 = [[] for _ in range(STACK_NUMBER)]
+stacks_part_2 = [[] for _ in range(STACK_NUMBER)]
 
 for line in stack_input:
-    i = 0
-    for position in range(1, 35, 4):
-        if position < len(line) and line[position] != " ":
-            stacks_part_1[i].append(line[position])
-            stacks_part_2[i].append(line[position])
-        i += 1
+    stack_number = 0
+    for i in range(1, len(line), 4):
+        if line[i] != " ":
+            stacks_part_1[stack_number].append(line[i])
+            stacks_part_2[stack_number].append(line[i])
+        stack_number += 1
 
 for move in moves.split("\n"):
     num_moves, from_stack, to_stack = [
