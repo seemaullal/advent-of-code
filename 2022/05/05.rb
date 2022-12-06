@@ -9,24 +9,21 @@ instructions = instructions.split("\n").map do |instruction|
   instruction.split.filter_map { _1.to_i if _1.to_i.to_s == _1 }
 end
 
-stacks = []
+part1 = Array.new(9) { [] }
+part2 = Array.new(9) { [] }
 
-start.each do |line|
-  (1..35).step(4).each_with_index do |v, idx|
-    stacks[idx] ||= []
-    stacks[idx].push(line[v]) unless line[v] == ' '
+[part1, part2].each do |part|
+  start.each do |line|
+    (1..35).step(4).each_with_index do |v, idx|
+      part[idx].push(line[v]) unless line[v] == ' '
+    end
   end
 end
 
-part1 = stacks.map(&:dup)
-part2 = stacks.map(&:dup)
-
 instructions.each do |num_to_move, move_from, move_to|
-  num_to_move.times do
-    part1[move_to - 1].push(part1[move_from - 1].pop)
-  end
+  part1[move_to - 1].concat(part1[move_from - 1].pop(num_to_move).reverse)
   part2[move_to - 1].concat(part2[move_from - 1].pop(num_to_move))
 end
 
-puts part1.map(&:last).join
-puts part2.map(&:last).join
+puts "Part 1: #{part1.map(&:last).join}"
+puts "Part 2: #{part2.map(&:last).join}"
