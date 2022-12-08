@@ -2,6 +2,13 @@ with open("inputs/8.txt") as file:
     heights = [[int(num) for num in list(line.strip())] for line in file]
 
 
+def max_in_column(starting_row, ending_row, column):
+    max_in_col = float("-inf")
+    for row_num in range(starting_row, ending_row):
+        max_in_col = max(max_in_col, heights[row_num][column])
+    return max_in_col
+
+
 def part_1():
     num_visible = 0
     for row in range(len(heights)):
@@ -18,18 +25,10 @@ def part_1():
             elif max(heights[row][col + 1 :]) < heights[row][col]:
                 num_visible += 1
             else:
-                max_in_col = float("-inf")
-                for row_num in range(row):
-                    max_in_col = max(max_in_col, heights[row_num][col])
-                if max_in_col < heights[row][col]:
+                if max_in_column(0, row, col) < heights[row][col]:
                     num_visible += 1
-                    continue
-                max_in_col = float("-inf")
-                for row_num in range(row + 1, len(heights)):
-                    max_in_col = max(max_in_col, heights[row_num][col])
-                if max_in_col < heights[row][col]:
+                elif max_in_column(row + 1, len(heights), col) < heights[row][col]:
                     num_visible += 1
-                    continue
     return num_visible
 
 
