@@ -13,25 +13,23 @@ def part_1():
                 or col == len(heights[0]) - 1
             ):
                 num_visible += 1
-                continue
-            if max(heights[row][:col]) < heights[row][col]:
+            elif max(heights[row][:col]) < heights[row][col]:
                 num_visible += 1
-                continue
-            if max(heights[row][col + 1 :]) < heights[row][col]:
+            elif max(heights[row][col + 1 :]) < heights[row][col]:
                 num_visible += 1
-                continue
-            max_in_col = float("-inf")
-            for row_num in range(row):
-                max_in_col = max(max_in_col, heights[row_num][col])
-            if max_in_col < heights[row][col]:
-                num_visible += 1
-                continue
-            max_in_col = float("-inf")
-            for row_num in range(row + 1, len(heights)):
-                max_in_col = max(max_in_col, heights[row_num][col])
-            if max_in_col < heights[row][col]:
-                num_visible += 1
-                continue
+            else:
+                max_in_col = float("-inf")
+                for row_num in range(row):
+                    max_in_col = max(max_in_col, heights[row_num][col])
+                if max_in_col < heights[row][col]:
+                    num_visible += 1
+                    continue
+                max_in_col = float("-inf")
+                for row_num in range(row + 1, len(heights)):
+                    max_in_col = max(max_in_col, heights[row_num][col])
+                if max_in_col < heights[row][col]:
+                    num_visible += 1
+                    continue
     return num_visible
 
 
