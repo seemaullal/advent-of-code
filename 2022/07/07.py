@@ -10,7 +10,7 @@ while index < len(commands):
     if command[0] == "$":
         if command[1] == "cd":
             if command[2].startswith("/"):
-                current_directory = command[2]
+                current_directory = command[2][1:]
             elif command[2] == "..":
                 current_directory = (
                     current_directory[: current_directory.rfind("/")] or "/"
@@ -42,7 +42,7 @@ def part_1():
     result = 0
     for directory in directories:
         size = 0
-        to_visit = directories[directory]
+        to_visit = directories[directory][:]
         while to_visit:
             current = to_visit.pop(-1)
             if isinstance(current, int):
