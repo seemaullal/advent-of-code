@@ -35,22 +35,23 @@ while index < len(commands):
                 index += 1
 
 directory_sizes = {}
+for directory in directories:
+    size = 0
+    to_visit = directories[directory][:]
+    while to_visit:
+        current = to_visit.pop(-1)
+        if isinstance(current, int):
+            size += current
+        else:
+            to_visit.extend(directories.get(current, []))
+    directory_sizes[directory] = size
 
 
 def part_1():
     result = 0
-    for directory in directories:
-        size = 0
-        to_visit = directories[directory][:]
-        while to_visit:
-            current = to_visit.pop(-1)
-            if isinstance(current, int):
-                size += current
-            else:
-                to_visit.extend(directories.get(current, []))
-        if size <= 100_000:
-            result += size
-        directory_sizes[directory] = size
+    for directory_size in directory_sizes.values():
+        if directory_size <= 100_000:
+            result += directory_size
     return result
 
 
