@@ -1,7 +1,9 @@
+from collections import defaultdict
+
 with open("inputs/7.txt") as file:
     commands = [line.strip().split(" ") for line in file]
 
-directories = {}
+directories = defaultdict(list)
 
 index = 0
 current_directory = ""
@@ -19,15 +21,10 @@ while index < len(commands):
                 if not current_directory.endswith("/"):
                     current_directory += "/"
                 current_directory += f"{command[2]}"
-            if current_directory not in directories:
-                directories[current_directory] = []
             index += 1
-            continue
         if command[1] == "ls":
             index += 1
-            while index < len(commands) and (
-                commands[index][0] == "dir" or commands[index][0].isnumeric()
-            ):
+            while index < len(commands) and commands[index][0] != "$":
                 part_1, part_2 = commands[index]
                 if part_1 == "dir":
                     directories[current_directory].append(
