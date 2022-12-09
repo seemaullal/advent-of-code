@@ -32,19 +32,25 @@ def part_1():
     return num_visible
 
 
-def count_visible_trees(current_row, current_col, horizontal_move, vertical_move):
-    starting_height = heights[current_row][current_col]
-    trees_visible = 0
-    current_row += horizontal_move
-    current_col += vertical_move
-    while 0 <= current_row < ROW_NUM and 0 <= current_col < COL_NUM:
-        trees_visible += 1
-        if heights[current_row][current_col] >= starting_height:
-            break
-
-        current_row += horizontal_move
-        current_col += vertical_move
-    return trees_visible
+def count_visible_trees(
+    current_row, current_col, horizontal_move, vertical_move, starting_height
+):
+    if (
+        current_row < 0
+        or current_row >= ROW_NUM
+        or current_col < 0
+        or current_col >= COL_NUM
+    ):
+        return 0
+    elif heights[current_row][current_col] >= starting_height:
+        return 1
+    return 1 + count_visible_trees(
+        current_row + horizontal_move,
+        current_col + vertical_move,
+        horizontal_move,
+        vertical_move,
+        starting_height,
+    )
 
 
 def part_2():
@@ -56,7 +62,11 @@ def part_2():
             current_score = 1
             for x_move, y_move in ((-1, 0), (1, 0), (0, -1), (0, 1)):
                 current_score *= count_visible_trees(
-                    row_number, col_number, x_move, y_move
+                    row_number + x_move,
+                    col_number + y_move,
+                    x_move,
+                    y_move,
+                    heights[row_number][col_number],
                 )
             highest_scenic_score = max(highest_scenic_score, current_score)
     return highest_scenic_score
