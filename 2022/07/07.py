@@ -37,6 +37,8 @@ while index < len(commands):
                     directories[current_directory].append(int(part_1))
                 index += 1
 
+directory_sizes = {}
+
 
 def part_1():
     result = 0
@@ -51,12 +53,18 @@ def part_1():
                 to_visit.extend(directories.get(current, []))
         if size <= 100_000:
             result += size
+        directory_sizes[directory] = size
     return result
 
 
 def part_2():
-    pass
+    total_size = 70_000_000
+    space_needed = 30_000_000
+    currently_free = total_size - directory_sizes[""]
+    for size in sorted(directory_sizes.values()):
+        if currently_free + size > space_needed:
+            return size
 
 
 print(f"Part 1: {part_1()}")
-# print(f"Part 2: {part_2()}")
+print(f"Part 2: {part_2()}")
