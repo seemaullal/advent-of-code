@@ -5,6 +5,9 @@ with open("inputs/7.txt") as file:
 
 directories = defaultdict(list)
 
+# parsing
+# handles directories with same name in different folders
+# handles cd-ing into any directory (cd /a/b for example)
 index = 0
 current_directory = ""
 while index < len(commands):
@@ -34,6 +37,7 @@ while index < len(commands):
                     directories[current_directory].append(int(part_1))
                 index += 1
 
+# do depth first search on the directory tree to compute sizes
 directory_sizes = {}
 for directory in directories:
     size = 0
