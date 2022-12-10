@@ -24,10 +24,8 @@ for direction, amount in input_data:
                     knot_2[1] += 1
                 if knot_1[1] < knot_2[1]:
                     knot_2[1] -= 1
-            if index == 1:
-                part_1_positions.add((knot_2[0], knot_2[1]))
-            if index == 9:
-                part_2_positions.add((knot_2[0], knot_2[1]))
+        part_1_positions.add(tuple(knots[1]))
+        part_2_positions.add(tuple(knots[-1]))
 part_1 = len(part_1_positions)
 part_2 = len(part_2_positions)
 
