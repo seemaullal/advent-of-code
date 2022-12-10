@@ -15,16 +15,13 @@ for direction, amount in input_data:
         for index in range(1, len(knots)):
             knot_1, knot_2 = knots[index - 1 : index + 1]
             if (abs(knot_1[0] - knot_2[0]) > 1) or (abs(knot_1[1] - knot_2[1]) > 1):
-                if knot_1[0] > knot_2[0]:
-                    knot_2[0] += 1
-                if knot_1[0] < knot_2[0]:
-                    knot_2[0] -= 1
-                if knot_1[1] > knot_2[1]:
-                    knot_2[1] += 1
-                if knot_1[1] < knot_2[1]:
-                    knot_2[1] -= 1
+                knot_2[0] += int(knot_1[0] > knot_2[0])
+                knot_2[0] -= int(knot_1[0] < knot_2[0])
+                knot_2[1] += int(knot_1[1] > knot_2[1])
+                knot_2[1] -= int(knot_1[1] < knot_2[1])
         part_1_positions.add(tuple(knots[1]))
         part_2_positions.add(tuple(knots[-1]))
+
 
 print(f"Part 1: {len(part_1_positions)}")
 print(f"Part 2: {len(part_2_positions)}")
