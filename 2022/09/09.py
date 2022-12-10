@@ -1,16 +1,13 @@
 DIRECTIONS = {"R": (1, 0), "L": (-1, 0), "U": (0, 1), "D": (0, -1)}
-MOVES = ((0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1))
-
 with open("inputs/9.txt") as file:
     lines = [line.strip().split(" ") for line in file]
     input_data = [(line[0], int(line[1])) for line in lines]
 
-visited = set()
-head = [0, 0]
-tail = [0, 0]
-
 
 def part_1():
+    visited = set()
+    head = [0, 0]
+    tail = [0, 0]
     for direction, amount in input_data:
         x_move, y_move = DIRECTIONS[direction]
         for _ in range(amount):
