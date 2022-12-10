@@ -19,15 +19,14 @@ pixels = [["" for _ in range(40)] for _ in range(6)]
 for command in commands:
     update_pixels(pixels, cycle_number, x)
     cycle_number += 1
-    if cycle_number_affects_strength(cycle_number):
-        part_1 += cycle_number * x
+    part_1 += cycle_number * x * int(cycle_number_affects_strength(cycle_number))
     if command[0] == "addx":
         update_pixels(pixels, cycle_number, x)
         cycle_number += 1
-        if cycle_number_affects_strength(cycle_number):
-            part_1 += cycle_number * x
+        part_1 += cycle_number * x * int(cycle_number_affects_strength(cycle_number))
         x += int(command[1])
 
 print(f"Part 1: {part_1}")
+print("Part 2:")
 for index in range(len(pixels)):
     print("".join(pixels[index]))
