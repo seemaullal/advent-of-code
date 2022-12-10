@@ -13,8 +13,7 @@ for direction, amount in input_data:
         knots[0][0] += x_move
         knots[0][1] += y_move
         for index in range(1, len(knots)):
-            knot_1 = knots[index - 1]
-            knot_2 = knots[index]
+            knot_1, knot_2 = knots[index - 1 : index + 1]
             if (abs(knot_1[0] - knot_2[0]) > 1) or (abs(knot_1[1] - knot_2[1]) > 1):
                 if knot_1[0] > knot_2[0]:
                     knot_2[0] += 1
@@ -26,8 +25,6 @@ for direction, amount in input_data:
                     knot_2[1] -= 1
         part_1_positions.add(tuple(knots[1]))
         part_2_positions.add(tuple(knots[-1]))
-part_1 = len(part_1_positions)
-part_2 = len(part_2_positions)
 
-print(f"Part 1: {part_1}")
-print(f"Part 2: {part_2}")
+print(f"Part 1: {len(part_1_positions)}")
+print(f"Part 2: {len(part_2_positions)}")
