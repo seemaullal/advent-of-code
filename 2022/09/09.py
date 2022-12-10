@@ -14,13 +14,13 @@ def part_1():
             head[0] += x_move
             head[1] += y_move
             if (abs(head[0] - tail[0]) > 1) or (abs(head[1] - tail[1]) > 1):
-                if head[0] - tail[0] > 0:
+                if head[0] > tail[0]:
                     tail[0] += 1
-                if head[0] - tail[0] < 0:
+                if head[0] < tail[0]:
                     tail[0] -= 1
-                if head[1] - tail[1] > 0:
+                if head[1] > tail[1]:
                     tail[1] += 1
-                if head[1] - tail[1] < 0:
+                if head[1] < tail[1]:
                     tail[1] -= 1
             visited.add((tail[0], tail[1]))
     return len(visited)
