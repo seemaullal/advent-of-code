@@ -2,8 +2,10 @@ with open("inputs/10.txt") as file:
     commands = [command.split() for command in file.read().splitlines()]
 
 
-def cycle_number_affects_strength(cycle_number):
-    return cycle_number % 40 == 20
+def updated_strength(current_strength, cycle_number, x):
+    if cycle_number % 40 == 20:
+        return current_strength + cycle_number * x
+    return current_strength
 
 
 def update_pixels(pixels, cycle_number, x):
@@ -19,11 +21,11 @@ pixels = [["" for _ in range(40)] for _ in range(6)]
 for command in commands:
     update_pixels(pixels, cycle_number, x)
     cycle_number += 1
-    part_1 += cycle_number * x * int(cycle_number_affects_strength(cycle_number))
+    part_1 = updated_strength(part_1, cycle_number, x)
     if command[0] == "addx":
         update_pixels(pixels, cycle_number, x)
         cycle_number += 1
-        part_1 += cycle_number * x * int(cycle_number_affects_strength(cycle_number))
+        part_1 = updated_strength(part_1, cycle_number, x)
         x += int(command[1])
 
 print(f"Part 1: {part_1}")
