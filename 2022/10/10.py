@@ -1,5 +1,5 @@
 with open("inputs/10.txt") as file:
-    commands = file.read().splitlines()
+    commands = [command.split() for command in file.read().splitlines()]
 
 
 def cycle_number_affects_strength(cycle_number):
