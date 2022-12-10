@@ -9,8 +9,8 @@ for direction, amount in input_data:
     x_move, y_move = DIRECTIONS[direction]
     for _ in range(amount):
         knots[0] = [knots[0][0] + x_move, knots[0][1] + y_move]
-        for index in range(1, len(knots)):
-            knot_1_x, knot_1_y, knot_2_x, knot_2_y = knots[index - 1] + knots[index]
+        for index, (knot_2_x, knot_2_y) in enumerate(knots[1:], 1):
+            knot_1_x, knot_1_y = knots[index - 1]
             if (abs(knot_1_x - knot_2_x) > 1) or (abs(knot_1_y - knot_2_y) > 1):
                 knots[index][0] += int(knot_1_x > knot_2_x) - int(knot_1_x < knot_2_x)
                 knots[index][1] += int(knot_1_y > knot_2_y) - int(knot_1_y < knot_2_y)
