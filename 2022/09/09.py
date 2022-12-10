@@ -4,31 +4,32 @@ with open("inputs/9.txt") as file:
     input_data = [(line[0], int(line[1])) for line in lines]
 
 
-def part_1():
-    visited = set()
-    head = [0, 0]
-    tail = [0, 0]
-    for direction, amount in input_data:
-        x_move, y_move = DIRECTIONS[direction]
-        for _ in range(amount):
-            head[0] += x_move
-            head[1] += y_move
-            if (abs(head[0] - tail[0]) > 1) or (abs(head[1] - tail[1]) > 1):
-                if head[0] > tail[0]:
-                    tail[0] += 1
-                if head[0] < tail[0]:
-                    tail[0] -= 1
-                if head[1] > tail[1]:
-                    tail[1] += 1
-                if head[1] < tail[1]:
-                    tail[1] -= 1
-            visited.add((tail[0], tail[1]))
-    return len(visited)
+knots = [[0, 0] for _ in range(10)]
+part_1_positions = set()
+part_2_positions = set()
+for direction, amount in input_data:
+    x_move, y_move = DIRECTIONS[direction]
+    for _ in range(amount):
+        knots[0][0] += x_move
+        knots[0][1] += y_move
+        for index in range(1, len(knots)):
+            knot_1 = knots[index - 1]
+            knot_2 = knots[index]
+            if (abs(knot_1[0] - knot_2[0]) > 1) or (abs(knot_1[1] - knot_2[1]) > 1):
+                if knot_1[0] > knot_2[0]:
+                    knot_2[0] += 1
+                if knot_1[0] < knot_2[0]:
+                    knot_2[0] -= 1
+                if knot_1[1] > knot_2[1]:
+                    knot_2[1] += 1
+                if knot_1[1] < knot_2[1]:
+                    knot_2[1] -= 1
+            if index == 1:
+                part_1_positions.add((knot_2[0], knot_2[1]))
+            if index == 9:
+                part_2_positions.add((knot_2[0], knot_2[1]))
+part_1 = len(part_1_positions)
+part_2 = len(part_2_positions)
 
-
-def part_2():
-    pass
-
-
-print(f"Part 1: {part_1()}")
-print(f"Part 2: {part_2()}")
+print(f"Part 1: {part_1}")
+print(f"Part 2: {part_2}")
