@@ -1,4 +1,4 @@
-with open("inputs/sample11.txt") as file:
+with open("inputs/11.txt") as file:
     monkey_input = [line.strip() for line in file]
 monkeys = []
 
@@ -10,10 +10,7 @@ for line in monkey_input:
         items = [int(item) for item in line[line.find(":") + 2 :].split(",")]
         monkeys[-1]["starting_items"] = items
     if line.strip().startswith("Operation"):
-        formula_parts = line[line.find("=") + 2 :].split(" ")
-        monkeys[-1]["operation"] = [
-            int(part) if part.isnumeric() else part for part in formula_parts
-        ]
+        monkeys[-1]["operation"] = line[line.find("=") + 2 :].split(" ")
     if line.strip().startswith("Test"):
         test["divisible_by"] = int(line[line.find("by") + 2 :])
     if line.strip().startswith("If true"):
@@ -24,7 +21,20 @@ for line in monkey_input:
 
 
 def part_1():
-    pass
+    inspected_items = [0 for _ in monkeys]
+    for _ in range(20):
+        for monkey_number, monkey in enumerate(monkeys):
+            for worry_level in monkey["starting_items"]:
+                inspected_items[monkey_number] += 1
+                expression = ""
+                for part in monkey["operation"]:
+                    expression += "worry_level" if part == "old" else part
+                worry_level = eval(expression) // 3
+                key = worry_level % monkey["test"]["divisible_by"] == 0
+                monkeys[monkey["test"][key]]["starting_items"].append(worry_level)
+            monkey["starting_items"] = []
+    inspected_items.sort()
+    return inspected_items[-2] * inspected_items[-1]
 
 
 def part_2():
