@@ -26,6 +26,5 @@ for command in commands:
         x += int(command[1])
 
 print(f"Part 1: {part_1}")
-print("Part 2:")
-for index in range(len(pixels)):
-    print("".join(pixels[index]))
+print(f"Part 2:")
+print("\n".join(["".join(row) for row in pixels]))
