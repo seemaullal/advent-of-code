@@ -1,28 +1,30 @@
 from copy import deepcopy
 
 with open("inputs/11.txt") as file:
-    monkey_input = [line.strip() for line in file]
+    monkey_data = [monkey.split("\n") for monkey in file.read().split("\n\n")]
 monkeys = []
 product_of_divisible_by = 1
 
-for line in monkey_input:
-    if line.startswith("Monkey"):
-        monkeys.append({})
-        test = {}
-    if line.strip().startswith("Starting items"):
-        items = [int(item) for item in line[line.find(":") + 2 :].split(",")]
-        monkeys[-1]["starting_items"] = items
-    if line.strip().startswith("Operation"):
-        monkeys[-1]["operation"] = line[line.find("=") + 2 :].split(" ")
-    if line.strip().startswith("Test"):
-        value = int(line[line.find("by") + 2 :])
-        product_of_divisible_by *= value
-        test["divisible_by"] = value
-    if line.strip().startswith("If true"):
-        test[True] = int(line[line.rfind(" ") + 1 :])
-    if line.strip().startswith("If false"):
-        test[False] = int(line[line.rfind(" ") + 1 :])
-        monkeys[-1]["test"] = test
+for monkey in monkey_data:
+    current_monkey = {}
+    test = {}
+    for line in monkey:
+        line = line.strip()
+        if line.startswith("Starting items"):
+            items = [int(item) for item in line[line.find(":") + 2 :].split(",")]
+            current_monkey["starting_items"] = items
+        if line.startswith("Operation"):
+            current_monkey["operation"] = line[line.find("=") + 2 :].split(" ")
+        if line.startswith("Test"):
+            value = int(line[line.find("by") + 2 :])
+            product_of_divisible_by *= value
+            test["divisible_by"] = value
+        if line.startswith("If true"):
+            test[True] = int(line[line.rfind(" ") + 1 :])
+        if line.startswith("If false"):
+            test[False] = int(line[line.rfind(" ") + 1 :])
+    current_monkey["test"] = test
+    monkeys.append(current_monkey)
 
 
 def part_1():
