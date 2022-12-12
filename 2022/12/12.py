@@ -6,18 +6,16 @@ with open("inputs/12.txt") as file:
         grid.append([])
         for col_number, elevation in enumerate(line.strip()):
             if elevation == "S":
-                START_X = row_number
-                START_Y = col_number
+                START_X, START_Y = row_number, col_number
                 elevation = "s"
             elif elevation == "E":
-                END_X, END_Y = (row_number, col_number)
+                END_X, END_Y = row_number, col_number
                 elevation = "z"
-            grid[-1].append(elevation)
+            grid[-1].append(ord(elevation) - ord("a"))
 
-ROW_NUM = row_number
-COL_NUM = col_number
 
-seen = set()
+def is_within_grid(row_number, column_number):
+    return 0 <= row_number < len(grid) and 0 <= column_number < len(grid[0])
 
 
 def breadth_first_search(starting_position, stop_searching, comparitor):
@@ -38,14 +36,9 @@ def breadth_first_search(starting_position, stop_searching, comparitor):
                 to_visit.append((possible_row, possible_col, current_steps + 1))
                 seen.add((possible_row, possible_col))
 
-
-def is_within_grid(row_number, column_number):
-    return 0 <= row_number < ROW_NUM and 0 <= column_number < COL_NUM
-
-
 def part_1():
     def comparitor(current_x, current_y, possible_x, possible_y):
-        return ord(grid[possible_x][possible_y]) <= ord(grid[current_x][current_y]) + 1
+        return grid[possible_x][possible_y] <= grid[current_x][current_y] + 1
 
     def stop_searching(current_x, current_y):
         return current_x == END_X and current_y == END_Y
@@ -55,10 +48,10 @@ def part_1():
 
 def part_2():
     def comparitor(current_x, current_y, possible_x, possible_y):
-        return ord(grid[current_x][current_y]) <= ord(grid[possible_x][possible_y]) + 1
+        return grid[possible_x][possible_y] + 1 >= grid[current_x][current_y]
 
     def stop_searching(current_x, current_y):
-        return grid[current_x][current_y] == "a"
+        return grid[current_x][current_y] == 0
 
     return breadth_first_search((END_X, END_Y), stop_searching, comparitor)
 
