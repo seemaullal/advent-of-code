@@ -36,24 +36,19 @@ def breadth_first_search(starting_position, stop_searching, comparitor):
                 to_visit.append((possible_row, possible_col, current_steps + 1))
                 seen.add((possible_row, possible_col))
 
+
 def part_1():
-    def comparitor(current_x, current_y, possible_x, possible_y):
-        return grid[possible_x][possible_y] <= grid[current_x][current_y] + 1
+    comparitor = lambda cx, cy, px, py: grid[px][py] <= grid[cx][cy] + 1
+    stop = lambda row, col: row == END_X and col == END_Y
 
-    def stop_searching(current_x, current_y):
-        return current_x == END_X and current_y == END_Y
-
-    return breadth_first_search((START_X, START_Y), stop_searching, comparitor)
+    return breadth_first_search((START_X, START_Y), stop, comparitor)
 
 
 def part_2():
-    def comparitor(current_x, current_y, possible_x, possible_y):
-        return grid[possible_x][possible_y] + 1 >= grid[current_x][current_y]
+    comparitor = lambda cx, cy, px, py: grid[px][py] + 1 >= grid[cx][cy]
+    stop = lambda row, col: grid[row][col] == 0
 
-    def stop_searching(current_x, current_y):
-        return grid[current_x][current_y] == 0
-
-    return breadth_first_search((END_X, END_Y), stop_searching, comparitor)
+    return breadth_first_search((END_X, END_Y), stop, comparitor)
 
 
 print(f"Part 1: {part_1()}")
