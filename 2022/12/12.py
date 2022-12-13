@@ -18,9 +18,10 @@ def is_within_grid(row_number, column_number):
     return 0 <= row_number < len(grid) and 0 <= column_number < len(grid[0])
 
 
-def breadth_first_search(starting_position, stop_searching, comparitor):
-    to_visit = deque([(*starting_position, 0)])
-    seen = set([starting_position])
+def breadth_first_search(stop_searching):
+    comparitor = lambda cx, cy, px, py: grid[px][py] + 1 >= grid[cx][cy]
+    to_visit = deque([(END_X, END_Y, 0)])
+    seen = set([(END_X, END_Y)])
     while to_visit:
         current_row, current_col, current_steps = to_visit.popleft()
         if stop_searching(current_row, current_col):
@@ -38,17 +39,13 @@ def breadth_first_search(starting_position, stop_searching, comparitor):
 
 
 def part_1():
-    comparitor = lambda cx, cy, px, py: grid[px][py] <= grid[cx][cy] + 1
-    stop = lambda row, col: row == END_X and col == END_Y
-
-    return breadth_first_search((START_X, START_Y), stop, comparitor)
+    stop = lambda row, col: row == START_X and col == START_Y
+    return breadth_first_search(stop)
 
 
 def part_2():
-    comparitor = lambda cx, cy, px, py: grid[px][py] + 1 >= grid[cx][cy]
     stop = lambda row, col: grid[row][col] == 0
-
-    return breadth_first_search((END_X, END_Y), stop, comparitor)
+    return breadth_first_search(stop)
 
 
 print(f"Part 1: {part_1()}")
