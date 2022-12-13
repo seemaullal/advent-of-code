@@ -6,11 +6,9 @@ with open("inputs/12.txt") as file:
         grid.append([])
         for col_number, elevation in enumerate(line.strip()):
             if elevation == "S":
-                START_X, START_Y = row_number, col_number
-                elevation = "s"
+                START_X, START_Y, elevation = row_number, col_number, "a"
             elif elevation == "E":
-                END_X, END_Y = row_number, col_number
-                elevation = "z"
+                END_X, END_Y, elevation = row_number, col_number, "z"
             grid[-1].append(ord(elevation) - ord("a"))
 
 
@@ -19,33 +17,30 @@ def is_within_grid(row_number, column_number):
 
 
 def breadth_first_search(stop_searching):
-    comparitor = lambda cx, cy, px, py: grid[px][py] + 1 >= grid[cx][cy]
     to_visit = deque([(END_X, END_Y, 0)])
     seen = set([(END_X, END_Y)])
     while to_visit:
-        current_row, current_col, current_steps = to_visit.popleft()
-        if stop_searching(current_row, current_col):
-            return current_steps
+        curr_row, curr_col, curr_steps = to_visit.popleft()
+        if stop_searching(curr_row, curr_col):
+            return curr_steps
         for row_dir, col_dir in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-            possible_row = current_row + row_dir
-            possible_col = current_col + col_dir
+            possible_row = curr_row + row_dir
+            possible_col = curr_col + col_dir
             if (
                 is_within_grid(possible_row, possible_col)
-                and comparitor(current_row, current_col, possible_row, possible_col)
+                and grid[possible_row][possible_col] + 1 >= grid[curr_row][curr_col]
                 and (possible_row, possible_col) not in seen
             ):
-                to_visit.append((possible_row, possible_col, current_steps + 1))
+                to_visit.append((possible_row, possible_col, curr_steps + 1))
                 seen.add((possible_row, possible_col))
 
 
 def part_1():
-    stop = lambda row, col: row == START_X and col == START_Y
-    return breadth_first_search(stop)
+    return breadth_first_search(lambda row, col: row == START_X and col == START_Y)
 
 
 def part_2():
-    stop = lambda row, col: grid[row][col] == 0
-    return breadth_first_search(stop)
+    return breadth_first_search(lambda row, col: grid[row][col] == 0)
 
 
 print(f"Part 1: {part_1()}")
