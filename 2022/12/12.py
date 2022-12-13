@@ -6,9 +6,9 @@ with open("inputs/12.txt") as file:
         grid.append([])
         for col_number, elevation in enumerate(line.strip()):
             if elevation == "S":
-                START_X, START_Y, elevation = row_number, col_number, "a"
+                START_ROW, START_COL, elevation = row_number, col_number, "a"
             elif elevation == "E":
-                END_X, END_Y, elevation = row_number, col_number, "z"
+                END_ROW, END_COL, elevation = row_number, col_number, "z"
             grid[-1].append(ord(elevation) - ord("a"))
 
 
@@ -17,31 +17,21 @@ def is_within_grid(row_number, column_number):
 
 
 def breadth_first_search(stop_searching):
-    to_visit = deque([(END_X, END_Y, 0)])
-    seen = set([(END_X, END_Y)])
+    to_visit = deque([(END_ROW, END_COL, 0)])
+    seen = set([(END_ROW, END_COL)])
     while to_visit:
-        curr_row, curr_col, curr_steps = to_visit.popleft()
-        if stop_searching(curr_row, curr_col):
-            return curr_steps
+        row, col, steps = to_visit.popleft()
+        if stop_searching(row, col):
+            return steps
         for row_dir, col_dir in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-            possible_row = curr_row + row_dir
-            possible_col = curr_col + col_dir
             if (
-                is_within_grid(possible_row, possible_col)
-                and grid[possible_row][possible_col] + 1 >= grid[curr_row][curr_col]
-                and (possible_row, possible_col) not in seen
+                is_within_grid(row + row_dir, col + col_dir)
+                and grid[row + row_dir][col + col_dir] + 1 >= grid[row][col]
+                and (row + row_dir, col + col_dir) not in seen
             ):
-                to_visit.append((possible_row, possible_col, curr_steps + 1))
-                seen.add((possible_row, possible_col))
+                to_visit.append((row + row_dir, col + col_dir, steps + 1))
+                seen.add((row + row_dir, col + col_dir))
 
 
-def part_1():
-    return breadth_first_search(lambda row, col: row == START_X and col == START_Y)
-
-
-def part_2():
-    return breadth_first_search(lambda row, col: grid[row][col] == 0)
-
-
-print(f"Part 1: {part_1()}")
-print(f"Part 2: {part_2()}")
+print("Part 1:", breadth_first_search(lambda r, c: r == START_ROW and c == START_COL))
+print("Part 2:", breadth_first_search(lambda r, c: grid[r][c] == 0))
