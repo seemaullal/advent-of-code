@@ -1,3 +1,7 @@
+from functools import total_ordering
+
+
+@total_ordering
 class Packet:
     def __init__(self, value):
         self.value = value
@@ -45,7 +49,7 @@ def part_1():
     result = 0
     pair_number = 1
     for index in range(0, len(packets) - 1, 2):
-        if packets[index] < packets[index + 1]:
+        if packets[index] <= packets[index + 1]:
             result += pair_number
         pair_number += 1
     return result
