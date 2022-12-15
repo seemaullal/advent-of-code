@@ -47,11 +47,9 @@ with open("inputs/13.txt") as file:
 
 def part_1():
     result = 0
-    pair_number = 1
-    for index in range(0, len(packets) - 1, 2):
-        if packets[index] <= packets[index + 1]:
+    for pair_number in range(1, len(packets) // 2 + 1):
+        if packets[pair_number * 2 - 2] <= packets[pair_number * 2 - 1]:
             result += pair_number
-        pair_number += 1
     return result
 
 
