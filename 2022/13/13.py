@@ -5,8 +5,13 @@ class Packet:
     def __repr__(self):
         return str(self.value)
 
-    @classmethod
-    def _compare(cls, item1, item2):
+    def __eq__(self, other):
+        return self._compare(self.value, other.value) == 0
+
+    def __lt__(self, other):
+        return self._compare(self.value, other.value) == -1
+
+    def _compare(self, item1, item2):
         if isinstance(item1, int) and isinstance(item2, int):
             if item1 == item2:
                 return 0
@@ -14,7 +19,7 @@ class Packet:
         elif isinstance(item1, list) and isinstance(item2, list):
             i = 0
             while i < len(item1) and i < len(item2):
-                result = cls.compare(item1[i], item2[i])
+                result = self._compare(item1[i], item2[i])
                 if result != 0:
                     return result
                 i += 1
@@ -22,15 +27,9 @@ class Packet:
                 return 0
             return -1 if len(item1) < len(item2) else 1
         elif isinstance(item1, list) and isinstance(item2, int):
-            return cls.compare(item1, [item2])
+            return self._compare(item1, [item2])
         else:
-            return cls.compare([item1], item2)
-
-    def __eq__(self, other):
-        return self.compare(self.value, other.value) == 0
-
-    def __lt__(self, other):
-        return self.compare(self.value, other.value) == -1
+            return self._compare([item1], item2)
 
 
 DIVISOR_PACKETS = [Packet([[2]]), Packet([[6]])]
