@@ -7,12 +7,10 @@ with open("inputs/18.txt") as file:
 def part_1():
     count = 0
     for x, y, z in cubes:
-        count += int(((x + 1, y, z) not in cubes))
-        count += int(((x - 1, y, z) not in cubes))
-        count += int(((x, y + 1, z) not in cubes))
-        count += int(((x, y - 1, z) not in cubes))
-        count += int(((x, y, z + 1) not in cubes))
-        count += int(((x, y, z - 1) not in cubes))
+        for offset in (-1, 1):
+            count += int(((x + offset, y, z)) not in cubes)
+            count += int(((x, y + offset, z)) not in cubes)
+            count += int(((x, y, z + offset)) not in cubes)
     return count
 
 
