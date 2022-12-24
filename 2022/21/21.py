@@ -8,19 +8,18 @@ with open("inputs/21.txt") as file:
             monkeys[monkey] = operation.split(" ")
 
 
+def is_integer(value):
+    return isinstance(value, int)
+
+
 def part_1():
     while True:
-        for monkey, operation in monkeys.items():
-            if isinstance(operation, int):
+        for monkey, instruction in monkeys.items():
+            if is_integer(instruction):
                 continue
-            if isinstance(monkeys[operation[0]], int) and isinstance(
-                monkeys[operation[2]], int
-            ):
-                monkeys[monkey] = int(
-                    eval(
-                        f"{monkeys[operation[0]]}{operation[1]}{monkeys[operation[2]]}"
-                    )
-                )
+            part1, op, part2 = instruction
+            if is_integer(monkeys[part1]) and is_integer(monkeys[part2]):
+                monkeys[monkey] = int(eval(f"{monkeys[part1]}{op}{monkeys[part2]}"))
                 if monkey == "root":
                     return monkeys[monkey]
 
