@@ -20,8 +20,8 @@ def part_1():
 def part_2():
     priority_sum = 0
     for group_start_index in range(0, len(rucksack_items)-2, 3):
-        group = [set(items) for items in rucksack_items[group_start_index:group_start_index + 3]]
-        in_common = group[0].intersection(group[1]).intersection(group[2]).pop()
+        group1, group2, group3 = [set(items) for items in rucksack_items[group_start_index:group_start_index + 3]]
+        in_common = group1.intersection(group2).intersection(group3).pop()
         priority_sum += get_priority(in_common)
     return priority_sum
 
