@@ -1,15 +1,3 @@
-def part_1():
-    with open("../inputs/1.txt") as file:
-        calibration_values = []
-        for line in file:
-            value = []
-            for character in line:
-                if character.isdigit():
-                    value.append(character)
-            calibration_values.append(int(f"{value[0]}{value[-1]}"))
-    return sum(calibration_values)
-
-
 WORD_TO_NUM = {
     "one": "1",
     "two": "2",
@@ -23,7 +11,7 @@ WORD_TO_NUM = {
 }
 
 
-def part_2():
+def solve(day_2=False):
     with open("../inputs/1.txt") as file:
         calibration_values = []
         for line in file:
@@ -31,7 +19,7 @@ def part_2():
             for index, character in enumerate(line):
                 if character.isdigit():
                     value.append(character)
-                else:
+                elif day_2:
                     for word in WORD_TO_NUM:
                         word_length = len(word)
                         if line[index : index + word_length] == word:
@@ -40,5 +28,5 @@ def part_2():
     return sum(calibration_values)
 
 
-print(f"Part 1: {part_1()}")
-print(f"Part 2: {part_2()}")
+print(f"Part 1: {solve()}")
+print(f"Part 2: {solve(True)}")
