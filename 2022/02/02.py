@@ -1,4 +1,4 @@
-with open("inputs/2.txt") as file:
+with open("../inputs/2.txt") as file:
     moves = [turn.strip().split(" ") for turn in file]
 
 scores = { 'X': 1, 'Y': 2, 'Z': 3 }
