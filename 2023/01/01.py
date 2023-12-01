@@ -1,32 +1,34 @@
-WORD_TO_NUM = {
-    "one": "1",
-    "two": "2",
-    "three": "3",
-    "four": "4",
-    "five": "5",
-    "six": "6",
-    "seven": "7",
-    "eight": "8",
-    "nine": "9",
-}
+NUMS = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+]
+
+with open("../inputs/1.txt") as file:
+    document_lines = file.read().strip().split("\n")
 
 
-def solve(day_2=False):
-    with open("../inputs/1.txt") as file:
-        calibration_values = []
-        for line in file:
-            value = []
-            for index, character in enumerate(line):
-                if character.isdigit():
-                    value.append(character)
-                elif day_2:
-                    for word in WORD_TO_NUM:
-                        word_length = len(word)
-                        if line[index : index + word_length] == word:
-                            value.append(WORD_TO_NUM[word])
-            calibration_values.append(int(f"{value[0]}{value[-1]}"))
-    return sum(calibration_values)
+part_1 = 0
+part_2 = 0
+for line in document_lines:
+    part_1_values = []
+    part_2_values = []
+    for char_index, character in enumerate(line):
+        if character.isdigit():
+            part_1_values.append(character)
+            part_2_values.append(character)
+        for num_index, word in enumerate(NUMS):
+            if line[char_index : char_index + len(word)] == word:
+                part_2_values.append(num_index + 1)
+    part_1 += int(f"{part_1_values[0]}{part_1_values[-1]}")
+    part_2 += int(f"{part_2_values[0]}{part_2_values[-1]}")
 
 
-print(f"Part 1: {solve()}")
-print(f"Part 2: {solve(True)}")
+print(f"Part 1: {part_1}")
+print(f"Part 2: {part_2}")
