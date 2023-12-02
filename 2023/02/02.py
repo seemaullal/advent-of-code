@@ -1,29 +1,25 @@
 from collections import defaultdict
 
-AVAILABLE = {"blue": 14, "red": 12, "green": 13}
+PART_1_AVAILABLE_VALUES = {"blue": 14, "red": 12, "green": 13}
 
 part_1 = 0
 part_2 = 0
 with open("../inputs/2.txt") as file:
     for line_number, line in enumerate(file):
-        valid = True
-        max_num_per_color = defaultdict(int)
-        cube_sets = [
-            set.split(", ") for set in line.strip()[line.find(":") + 2 :].split("; ")
-        ]
-        for set in cube_sets:
-            for cube in set:
+        valid_for_part_1 = True
+        max_required_part_2 = defaultdict(int)
+        for set in line.strip()[line.find(":") + 2 :].split("; "):
+            for cube in set.split(", "):
                 number, color = cube.split(" ")
-                # part 1
-                if AVAILABLE[color] < int(number):
-                    valid = False
-
-                # part 2
-                max_num_per_color[color] = max(max_num_per_color[color], int(number))
-        if valid:
+                if PART_1_AVAILABLE_VALUES[color] < int(number):
+                    valid_for_part_1 = False
+                max_required_part_2[color] = max(
+                    max_required_part_2[color], int(number)
+                )
+        if valid_for_part_1:
             part_1 += line_number + 1
         power = 1
-        for max_needed in max_num_per_color.values():
+        for max_needed in max_required_part_2.values():
             power *= max_needed
         part_2 += power
 
