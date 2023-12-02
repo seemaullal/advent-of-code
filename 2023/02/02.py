@@ -16,8 +16,7 @@ with open("../inputs/2.txt") as file:
                 max_required_part_2[color] = max(
                     max_required_part_2[color], int(number)
                 )
-        if valid_for_part_1:
-            part_1 += line_number + 1
+        part_1 += (line_number + 1) * int(valid_for_part_1)
         power = 1
         for max_needed in max_required_part_2.values():
             power *= max_needed
