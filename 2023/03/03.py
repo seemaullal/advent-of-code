@@ -40,90 +40,44 @@ for row_index in range(NUM_ROWS):
                 for col in range(starting, pos + 1):
                     pos_to_part_num[(row_index, col)] = int(current)
 
-
-# part_2 = 0
-# for row_index in range(len(schematic)):
-#     for col_index in range(len(schematic[row_index])):
-#         if schematic[row_index][col_index] == "*":
-#             num_gears = 0
-#             gears = []
-#             if (
-#                 col_index != len(schematic[0]) - 1
-#                 and schematic[row_index][col_index + 1].isdigit()
-#             ):
-#                 num_gears += 1
-#                 gears.append((row_index, col_index + 1))
-#             if col_index != 0 and schematic[row_index][col_index - 1].isdigit():
-#                 num_gears += 1
-#                 gears.append((row_index, col_index - 1))
-#             left_top = False
-#             right_top = False
-#             left_bottom = False
-#             right_bottom = False
-#             top = False
-#             bottom = False
-#             if (
-#                 row_index != len(schematic) - 1 and col_index != len(schematic[0]) - 1
-#             ) and schematic[row_index + 1][col_index + 1].isdigit():
-#                 num_gears += 1
-#                 right_bottom = True
-#                 # gears.append((row_index + 1, col_index + 1))
-#             if (row_index != 0 and col_index != 0) and schematic[row_index - 1][
-#                 col_index - 1
-#             ].isdigit():
-#                 num_gears += 1
-#                 left_top = True
-#                 # gears.append((row_index - 1, col_index - 1))
-#             if (row_index != 0 and col_index != len(schematic[0]) - 1) and schematic[
-#                 row_index - 1
-#             ][col_index + 1].isdigit():
-#                 num_gears += 1
-#                 right_top = True
-#                 # gears.append((row_index - 1, col_index + 1))
-#             if (row_index != len(schematic) - 1 and col_index != 0) and schematic[
-#                 row_index + 1
-#             ][col_index - 1].isdigit():
-#                 num_gears += 1
-#                 left_bottom = True
-#                 # gears.append((row_index + 1, col_index - 1))
-#             if row_index != 0 and schematic[row_index - 1][col_index].isdigit():
-#                 num_gears += 1
-#                 top = True
-#                 # if not left_top and not right_top:
-#                 #     gears.append((row_index - 1, col_index))
-#             if (
-#                 row_index != len(schematic) - 1
-#                 and schematic[row_index + 1][col_index].isdigit()
-#             ):
-#                 num_gears += 1
-#                 bottom = True
-#                 # if not left_bottom and not right_bottom:
-#                 #     gears.append((row_index + 1, col_index))
-#             if top:
-#                 gears.append((row_index - 1, col_index))
-#             else:
-#                 if left_top:
-#                     gears.append((row_index - 1, col_index - 1))
-#                 if right_top:
-#                     gears.append((row_index - 1, col_index + 1))
-#             if bottom:
-#                 gears.append((row_index + 1, col_index))
-#             else:
-#                 if left_bottom:
-#                     gears.append((row_index + 1, col_index - 1))
-#                 if right_bottom:
-#                     gears.append((row_index + 1, col_index + 1))
-#             if left_top and top:
-#                 num_gears -= 1
-#             if right_top and top:
-#                 num_gears -= 1
-#             if left_bottom and bottom:
-#                 num_gears -= 1
-#             if right_bottom and bottom:
-#                 num_gears -= 1
-#             if num_gears == 2:
-#                 print(len(gears))
-#                 part_2 += pos_to_part_num[gears[0]] * pos_to_part_num[gears[1]]
+for row_index in range(len(schematic)):
+    for col_index in range(len(schematic[row_index])):
+        if schematic[row_index][col_index] == "*":
+            gears = []
+            if (
+                col_index != NUM_COLS - 1
+                and schematic[row_index][col_index + 1].isdigit()
+            ):
+                gears.append((row_index, col_index + 1))
+            if col_index != 0 and schematic[row_index][col_index - 1].isdigit():
+                gears.append((row_index, col_index - 1))
+            if row_index != 0 and schematic[row_index - 1][col_index].isdigit():
+                gears.append((row_index - 1, col_index))
+            else:
+                if (row_index != 0 and col_index != 0) and schematic[row_index - 1][
+                    col_index - 1
+                ].isdigit():
+                    gears.append((row_index - 1, col_index - 1))
+                if (row_index != 0 and col_index != 0) and schematic[row_index - 1][
+                    col_index + 1
+                ].isdigit():
+                    gears.append((row_index - 1, col_index + 1))
+            if (
+                row_index < NUM_ROWS - 1
+                and schematic[row_index + 1][col_index].isdigit()
+            ):
+                gears.append((row_index + 1, col_index))
+            else:
+                if (row_index < NUM_ROWS - 1 and col_index != 0) and schematic[
+                    row_index + 1
+                ][col_index - 1].isdigit():
+                    gears.append((row_index + 1, col_index - 1))
+                if (
+                    row_index < NUM_ROWS - 1 and col_index < NUM_COLS - 1
+                ) and schematic[row_index + 1][col_index + 1].isdigit():
+                    gears.append((row_index + 1, col_index + 1))
+            if len(gears) == 2:
+                part_2 += pos_to_part_num[gears[0]] * pos_to_part_num[gears[1]]
 
 print(f"Part 1: {part_1}")
-# print(f"Part 2: {part_2}")
+print(f"Part 2: {part_2}")
