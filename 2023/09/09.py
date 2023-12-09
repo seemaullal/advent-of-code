@@ -15,7 +15,7 @@ def calculate_sum(part_2=False):
                     for value1, value2 in zip(current[-1], current[-1][1:])
                 ]
             )
-            if set(current[-1]) == {0}:
+            if all(num == 0 for num in current[-1]):
                 break
         if part_2:
             current[-1].insert(0, 0)
