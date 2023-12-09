@@ -17,16 +17,14 @@ def calculate_sum(part_2=False):
             )
             if all(num == 0 for num in current[-1]):
                 break
-        if part_2:
-            current[-1].insert(0, 0)
-            for i in range(len(current) - 2, 0, -1):
-                current[i - 1].insert(0, current[i - 1][0] - current[i][0])
-            result += current[i - 1][0]
-        else:
-            current[-1].append(0)
-            for i in range(len(current) - 2, 0, -1):
-                current[i - 1].append(current[i][-1] + current[i - 1][-1])
-            result += current[i - 1][-1]
+        current[-1].append(0)
+        for i in range(len(current) - 2, 0, -1):
+            index = 0 if part_2 else -1
+            if part_2:
+                current[i - 1].insert(0, current[i - 1][index] - current[i][index])
+            else:
+                current[i - 1].append(current[i][index] + current[i - 1][index])
+        result += current[i - 1][index]
     return result
 
 
