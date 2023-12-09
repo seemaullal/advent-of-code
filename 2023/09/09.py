@@ -19,12 +19,13 @@ def calculate_sum(part_2=False):
                 break
         current[-1].append(0)
         for i in range(len(current) - 2, 0, -1):
-            index = 0 if part_2 else -1
             if part_2:
-                current[i - 1].insert(0, current[i - 1][index] - current[i][index])
+                value_to_add = current[i - 1][0] - current[i][0]
             else:
-                current[i - 1].append(current[i][index] + current[i - 1][index])
-        result += current[i - 1][index]
+                value_to_add = current[i - 1][-1] + current[i][-1]
+            position_to_add = 0 if part_2 else len(current[i - 1])
+            current[i - 1].insert(position_to_add, value_to_add)
+        result += value_to_add
     return result
 
 
