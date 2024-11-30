@@ -7,7 +7,7 @@ require 'net/http'
 class MissingCookieError < StandardError
   def initialize(msg = nil)
     msg ||= 'You must export a value for AOC_SESSION in your environment ' \
-            'for this script to work. See the README for further instructions.'
+            'for this script to work. See https://github.com/seemaullal/advent-of-code for further instructions.'
     super
   end
 end
