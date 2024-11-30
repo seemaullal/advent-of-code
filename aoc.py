@@ -29,8 +29,12 @@ day_directory = f"{Path.cwd()}/{year}/{day_number}"
 
 Path(f"{day_directory}/input").mkdir(exist_ok=True, parents=True)
 
+# URL does not have leading zeros
+aoc_url = f"https://adventofcode.com/{year}/day/{int(day_number)}"
+
 input_contents = requests.get(
-    f"https://adventofcode.com/{year}/day/{day_number}/input",
+
+    f"{aoc_url}/input",
     cookies={"session": os.environ.get("AOC_SESSION")},
 ).text
 
@@ -40,4 +44,4 @@ with open(f"{day_directory}/input/{day_number}.txt", "w") as file:
 with open(f"{day_directory}/{day_number}.py", "w"):
     pass
 
-subprocess.run(["open", f"https://adventofcode.com/{year}/day/{day_number}"])
+subprocess.run(["open", aoc_url])
