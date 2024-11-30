@@ -16,16 +16,19 @@ tab of the developer tools. Here, there will be a value under "session" that sho
 value of characters and numbers. This is the value you will want to copy and replace "your_cookie" in
 the above example with.
 
-Once this variable is exported, you can use the following command to download the input (this assumes you have ruby installed, ideally the version in `.ruby-version`):
+Once this variable is exported, you can use either the ruby or python input scripts to download the input and create correct directory structure.
 
-```console
-ruby gi.rb 04
+For convenience, I would recommend adding a function to your `.zshrc` or `.bashrc` file so the command `aoc` will call the script and can be run from any directory:
+
+```bash
+aoc() {
+  cd ~/Developer/p/advent-of-code && python3 aoc.py $1 $2 && code .
+}
 ```
 
-The above will download the input for day 4 of the current year, create some starter code, and open the problem in your browser (opening the browser currently will only work in MacOS). To specify a different year, you can include it as a second argument:
+You can replace the directory and `code` with wherever you want to run the script from and how you want to open the editor. Then, run the command `aoc` with the day number and optionally the year:
 
-```console
-ruby gi.rb 4 2021
+```bash
+aoc 01
+aoc 04 2021
 ```
-
-This will download the input and set up the initial files for day 4 of 2021 instead of the current year.

@@ -41,4 +41,3 @@ with open(f"{day_directory}/{day_number}.py", "w"):
     pass
 
 subprocess.run(["open", f"https://adventofcode.com/{year}/day/{day_number}"])
-subprocess.run(["code", Path.cwd()])
