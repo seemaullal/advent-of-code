@@ -7,7 +7,7 @@ to the program in an environment variable (you can place this in your .zshrc or 
 cookie should be valid for about a month):
 
 ```console
-export AOC_COOKIE=your_cookie
+export AOC_SESSION=your_cookie
 ```
 
 To obtain the cookie, sign into Advent of Code through your browser, then use the
