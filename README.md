@@ -22,18 +22,17 @@ For convenience, I recommend adding a function to your `.zshrc` or `.bashrc` fil
 
 ```bash
 aoc() {
+  day=$(printf %02d $1)
   if [ -n "$2" ]
   then
     year=$2
   else
     year=$(date +'%Y')
   fi
-  cd ~/Developer/p/advent-of-code
+  cd ~/Developer/advent-of-code
   python3 aoc.py $1 $2
-  day=$(printf %02d $1)
-  echo $year/$day/$day.py
   code . -g $year/$day/$day.py
-  cd ~/Developer/p/advent-of-code/$year/$day
+  cd ~/Developer/advent-of-code/$year/$day
 }
 ```
 
