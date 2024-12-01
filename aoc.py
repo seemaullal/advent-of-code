@@ -27,7 +27,7 @@ sys.stdout.write(f"Downloading day {day_number} for {year}\n")
 
 day_directory = f"{Path.cwd()}/{year}/{day_number}"
 
-Path(f"{day_directory}/input").mkdir(exist_ok=True, parents=True)
+Path(f"{day_directory}/inputs").mkdir(exist_ok=True, parents=True)
 
 # URL does not have leading zeros
 aoc_url = f"https://adventofcode.com/{year}/day/{int(day_number)}"
@@ -38,7 +38,7 @@ input_contents = requests.get(
     cookies={"session": os.environ.get("AOC_SESSION")},
 ).text
 
-with open(f"{day_directory}/input/{day_number}.txt", "w") as file:
+with open(f"{day_directory}/inputs/{day_number}.txt", "w") as file:
     file.write(input_contents)
 
 with open(f"{day_directory}/{day_number}.py", "w"):
