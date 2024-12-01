@@ -22,21 +22,22 @@ For convenience, I recommend adding a function to your `.zshrc` or `.bashrc` fil
 
 ```bash
 aoc() {
-  day=$(printf %02d $1)
+ day=$(printf %02d $1)
   if [ -n "$2" ]
   then
     year=$2
   else
     year=$(date +'%Y')
   fi
-  cd ~/Developer/advent-of-code
+  base_dir=~/Developer/advent-of-code
+  cd $base_dir
   python3 aoc.py $1 $2
   code . -g $year/$day/$day.py
-  cd ~/Developer/advent-of-code/$year/$day
+  cd $base_dir/$year/$day
 }
 ```
 
-You can replace the `~/Developer/p/advent-of-code` directory and `code` with wherever you want to run the script from and how you want to open the editor. Then, run the command `aoc` with the day number and optionally the year:
+You can replace the `~/Developer/advent-of-code` directory and `code` with wherever you want to run the script from and how you want to open the editor. Then, run the command `aoc` with the day number and optionally the year:
 
 ```bash
 aoc 1
