@@ -4,6 +4,7 @@ import os
 import subprocess
 from datetime import datetime
 from pathlib import Path
+from shutil import copyfile
 
 aoc_session = os.environ.get("AOC_SESSION")
 if not aoc_session:
@@ -33,7 +34,6 @@ Path(f"{day_directory}/inputs").mkdir(exist_ok=True, parents=True)
 aoc_url = f"https://adventofcode.com/{year}/day/{int(day_number)}"
 
 input_contents = requests.get(
-
     f"{aoc_url}/input",
     cookies={"session": os.environ.get("AOC_SESSION")},
 ).text
@@ -41,7 +41,6 @@ input_contents = requests.get(
 with open(f"{day_directory}/inputs/{day_number}.txt", "w") as file:
     file.write(input_contents)
 
-with open(f"{day_directory}/{day_number}.py", "w"):
-    pass
+copyfile("template.py", f"{day_directory}/{day_number}.py")
 
 subprocess.run(["open", aoc_url])
