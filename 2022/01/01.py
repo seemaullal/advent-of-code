@@ -1,13 +1,12 @@
+calories = []
 
-with open("../inputs/1.txt") as file:
-    calories_per_elf = [[int(calories) for calories in elf.split("\n")] for elf in file.read().split("\n\n")]
+with open("inputs/01.txt", "r") as file:
+    elves  = [[int(item) for item in elf.split()] for elf in file.read().split("\n\n")]
 
-def part_1():
-    return max([sum(calories) for calories in calories_per_elf])
+for elf in elves:
+    calories.append(sum(elf))
 
-def part_2():
-    sorted_calories = sorted([sum(calories) for calories in calories_per_elf], reverse= True)
-    return sum(sorted_calories[:3])
+sorted_calories = sorted(calories, reverse=True)
 
-print(f"Part 1: {part_1()}")
-print(f"Part 2: {part_2()}")
+print(f"Part 1: {sorted_calories[0]}")
+print(f"Part 2: {sum(sorted_calories[:3])}")
