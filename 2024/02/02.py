@@ -21,10 +21,12 @@ with open("inputs/02.txt", "r") as file:
 for report in reports:
     if is_safe(report):
         part_1 += 1
-    for i in range(len(report)):
-        if is_safe(report[:i] + report[i+1:]):
-            part_2 += 1
-            break
+        part_2 += 1
+    else:
+        for i in range(len(report)):
+            if is_safe(report[:i] + report[i+1:]):
+                part_2 += 1
+                break
 
 print(f"Part 1: {part_1}")
 print(f"Part 2: {part_2}")
