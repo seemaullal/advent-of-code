@@ -6,6 +6,7 @@ with open("inputs/10.txt") as file:
 
 ROW_NUM = len(heights)
 COL_NUM = len(heights[0])
+POSSIBLE_DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
 
 def calculate_ways_part_1(row_number, col_number):
@@ -16,7 +17,7 @@ def calculate_ways_part_1(row_number, col_number):
         if (current_row, current_col) not in peaks_seen and heights[current_row][current_col] == 9:
             peaks_seen.add((current_row, current_col))
         else:
-            for row_direction, column_direction in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            for row_direction, column_direction in POSSIBLE_DIRECTIONS:
                 new_row = current_row + row_direction
                 new_col = current_col + column_direction
                 if (
@@ -35,7 +36,7 @@ def calculate_ways_part_2(row_num, column_num, previously_calculated):
     if (row_num, column_num) in previously_calculated:
         return previously_calculated[(row_num, column_num)]
     number_ways = 0
-    for row_direction, column_direction in [(-1, 0), (0, 1), (1, 0), (0, -1)]:
+    for row_direction, column_direction in POSSIBLE_DIRECTIONS:
         current_row = row_num + row_direction
         current_col = column_num + column_direction
         if (
