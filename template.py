@@ -1,7 +1,7 @@
 part_1 = 0
 part_2 = 0
 
-with open("inputs/01.txt", "r") as file:
+with open("inputs/input.txt", "r") as file:
     for line in file.read().splitlines():
         pass
 
