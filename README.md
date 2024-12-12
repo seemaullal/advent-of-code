@@ -32,7 +32,7 @@ aoc() {
   base_dir=~/Developer/advent-of-code
   cd $base_dir
   python3 aoc.py $1 $2
-  code . -g $year/$day/$day.py
+  code . -g $year/$day/solution.py
   cd $base_dir/$year/$day
 }
 ```

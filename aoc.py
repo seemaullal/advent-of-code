@@ -38,9 +38,9 @@ input_contents = requests.get(
     cookies={"session": os.environ.get("AOC_SESSION")},
 ).text
 
-with open(f"{day_directory}/inputs/{day_number}.txt", "w") as file:
+with open(f"{day_directory}/inputs/input.txt", "w") as file:
     file.write(input_contents)
 
-copyfile("template.py", f"{day_directory}/{day_number}.py")
+copyfile("template.py", f"{day_directory}/solution.py")
 
 subprocess.run(["open", aoc_url])
