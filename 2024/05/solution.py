@@ -24,6 +24,8 @@ for page in pages.split("\n"):
                 valid = False
     if valid:
         part_1 += order[len(order) // 2]
+    else:
+        pass
 
 
 print(f"Part 1: {part_1}")

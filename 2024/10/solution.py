@@ -8,8 +8,7 @@ ROW_NUM = len(heights)
 COL_NUM = len(heights[0])
 POSSIBLE_DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-
-def calculate_ways_part_1(row_number, col_number):
+def calculate_ways(row_number, col_number):
     peaks_seen = set()
     to_visit = [(row_number, col_number)]
     while to_visit:
@@ -54,8 +53,8 @@ def calculate_ways_part_2(row_num, column_num, previously_calculated):
 for row_num in range(ROW_NUM):
     for col_num in range(COL_NUM):
         if heights[row_num][col_num] == 0:
-            part_1 += calculate_ways_part_1(row_num, col_num)
-            part_2 += calculate_ways_part_2(row_num, col_num, {})
+            part_1, part_2 += calculate_ways(row_num, col_num)
+            # part_2 += calculate_ways_part_2(row_num, col_num, {})
 
 
 print(f"Part 1: {part_1}")
