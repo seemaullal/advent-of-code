@@ -1,7 +1,3 @@
-part_1 = 0
-part_2 = 0
-
-starting_row, starting_colummn = None, None
 with open("inputs/input.txt", "r") as file:
     part_1_grid, instructions = file.read().split("\n\n")
     part_1_grid = [list(row) for row in part_1_grid.split("\n")]
