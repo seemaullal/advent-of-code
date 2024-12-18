@@ -1,9 +1,6 @@
 from collections import deque
 from re import findall
 
-part_1 = 0
-part_2 = 0
-
 DIRECTIONS = ((-1, 0), (0, 1), (1, 0), (0, -1))
 GRID_SIZE = 70
 
@@ -15,10 +12,10 @@ def get_digits(string):
 rows = open("inputs/input.txt").read().strip().splitlines()
 
 current_grid = [["." for _ in range(GRID_SIZE + 1)] for _ in range(GRID_SIZE + 1)]
+
 for index, row in enumerate(rows):
     x, y = get_digits(row)
-    if 0 <= y <= GRID_SIZE and 0 <= x <= GRID_SIZE:
-        current_grid[y][x] = "#"
+    current_grid[y][x] = "#"
 
     to_visit = deque([(0, 0, 0)])
     seen = set()
