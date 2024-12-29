@@ -12,9 +12,10 @@ ordering_rules = [
 ]
 
 pages_before = defaultdict(set)
+pages_after = defaultdict(set)
 for first, second in ordering_rules:
     pages_before[second].add(first)
-
+    pages_after[first].add(second)
 for page in pages.split("\n"):
     order = [int(x) for x in page.split(",")]
     valid = True
@@ -25,7 +26,23 @@ for page in pages.split("\n"):
     if valid:
         part_1 += order[len(order) // 2]
     else:
-        pass
+        valid_pages = []
+        to_visit = []
+        intersecting_page_number = {
+            page: len(pages_before[page] & set(order)) for page in order
+        }
+        for page in order:
+            if intersecting_page_number[page] == 0:
+                to_visit.append(page)
+        while to_visit:
+            page = to_visit.pop()
+            valid_pages.append(page)
+            for other_page in pages_after[page]:
+                if other_page in intersecting_page_number:
+                    intersecting_page_number[other_page] -= 1
+                    if intersecting_page_number[other_page] == 0:
+                        to_visit.append(other_page)
+        part_2 += valid_pages[len(valid_pages) // 2]
 
 
 print(f"Part 1: {part_1}")
