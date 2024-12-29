@@ -1,6 +1,3 @@
-part_1 = set()
-part_2 = 0
-
 CURRENT_DIRECTION_TO_NEXT_DIRECTION = {
     "N": "E",
     "E": "S",
@@ -29,25 +26,27 @@ for row_num in range(ROW_COUNT):
             starting_column = column_num
             break
 
-for current_row in range(ROW_COUNT):
-    for current_column in range(COLUMN_COUNT):
+part_1 = 0
+part_2 = 0
+for row_number in range(ROW_COUNT):
+    for column_number in range(COLUMN_COUNT):
         current_row,current_column = starting_row, starting_column
         current_direction = "N"
+        seen_positions = set()
         seen_positions_and_directions = set()
-        seen_positions= set()
         while True:
-            if (current_row,current_column,current_direction) in seen_positions_and_directions:
+            if (current_row,current_column,current_direction) in seen_positions:
                 part_2 += 1
                 break
-            seen_positions_and_directions.add((current_row,current_column,current_direction))
-            seen_positions.add((current_row,current_column))
+            seen_positions.add((current_row,current_column,current_direction))
+            seen_positions_and_directions.add((current_row,current_column))
             row_delta, column_delta = DIRECTION_TO_MOVE[current_direction]
             next_row, next_column = current_row + row_delta, current_column + column_delta
             if not (0<=next_row<ROW_COUNT and 0<=next_column<COLUMN_COUNT):
-                if guard_map[current_row][current_column]=='#':
-                    part_1 = len(seen_positions)
+                if guard_map[row_number][column_number]=='#':
+                    part_1 = len(seen_positions_and_directions)
                 break
-            if guard_map[next_row][next_column] == "#" or next_row == current_row and next_column == current_column:
+            if guard_map[next_row][next_column] == "#" or next_row == row_number and next_column == column_number:
                 current_direction = CURRENT_DIRECTION_TO_NEXT_DIRECTION[current_direction]
             else:
                 current_row = next_row
