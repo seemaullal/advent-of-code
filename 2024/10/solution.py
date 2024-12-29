@@ -53,8 +53,8 @@ def calculate_ways_part_2(row_num, column_num, previously_calculated):
 for row_num in range(ROW_NUM):
     for col_num in range(COL_NUM):
         if heights[row_num][col_num] == 0:
-            part_1, part_2 += calculate_ways(row_num, col_num)
-            # part_2 += calculate_ways_part_2(row_num, col_num, {})
+            part_1 += calculate_ways(row_num, col_num)
+            part_2 += calculate_ways_part_2(row_num, col_num, {})
 
 
 print(f"Part 1: {part_1}")
