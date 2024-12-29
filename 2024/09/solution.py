@@ -1,36 +1,41 @@
-part_1 = 0
-part_2 = 0
-
-with open("inputs/09.txt", "r") as file:
+with open("inputs/input.txt", "r") as file:
     sequence = list(file.read().strip())
-blocks = []
-is_free_space = False
 
-id = 0
-for char in sequence:
-    if is_free_space:
-        for _ in range(int(char)):
-            blocks.append(".")
-    else:
-        for _ in range(int(char)):
-            blocks.append(str(id))
-        id += 1
-    is_free_space = not is_free_space
-current_free_space_index = 0
-right_index = len(blocks) -1
-while current_free_space_index < right_index:
-    while blocks[right_index] == ".":
-        right_index -= 1
-    while blocks[current_free_space_index] != ".":
-        current_free_space_index += 1
-    if current_free_space_index < right_index:
-        blocks[current_free_space_index] = blocks[right_index]
-        blocks[right_index] = "."
 
-for index, char in enumerate(blocks):
-    if char == ".":
-        break
-    part_1 += index * int(char)
+def calculate(is_part_1):
+    A = []
+    free_space = []
+    file_id = 0
+    results = []
+    position = 0
+    for index, character in enumerate(sequence):
+        if index % 2 == 0:
+            if not is_part_1:
+                A.append((position, int(character), file_id))
+            for _ in range(int(character)):
+                results.append(file_id)
+                if is_part_1:
+                    A.append((position, 1, file_id))
+                position += 1
+            file_id += 1
+        else:
+            free_space.append((position, int(character)))
+            for i in range(int(character)):
+                results.append(None)
+                position += 1
 
-print(f"Part 1: {part_1}")
-print(f"Part 2: {part_2}")
+    for position, size, file_id in reversed(A):
+        for space_index, (space_position, space_size) in enumerate(free_space):
+            if space_position < position and size <= space_size:
+                for index in range(size):
+                    results[position + index] = None
+                    results[space_position + index] = file_id
+
+                free_space[space_index] = (space_position + size, space_size - size)
+                break
+
+    return sum(index * value for index, value in enumerate(results) if value is not None)
+
+
+print(f"Part 1: {calculate(True)}")
+print(f"Part 2: {calculate(False)}")
