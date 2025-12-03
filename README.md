@@ -31,6 +31,7 @@ aoc() {
   fi
   base_dir=~/Developer/advent-of-code
   cd $base_dir
+  # note if you use a package manager and not the system python, modify the following line (for example `uv run aoc.py $1 $2`)
   python3 aoc.py $1 $2
   code . -g $year/$day/solution.py
   cd $base_dir/$year/$day
