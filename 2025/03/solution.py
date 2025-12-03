@@ -8,15 +8,15 @@ def max_joltage_part_1(digits):
     return max_tens * 10 + ones_place
 
 
-def max_joltage_part_2(digits):
-    to_skip = len(digits) - 12
+def max_joltage_part_2(digits, sequence_length):
+    to_skip = len(digits) - sequence_length
     result = []
     skipped_count = 0
     for digit in digits:
         while result and skipped_count < to_skip and result[-1] < digit:
             result.pop()
             skipped_count += 1
-        if len(result) < 12:
+        if len(result) < sequence_length:
             result.append(digit)
         else:
             skipped_count += 1
@@ -36,7 +36,7 @@ def solve():
     part_1 = sum(max_joltage_part_1(bank) for bank in banks)
     print(f"Part 1: {part_1}")
 
-    part_2 = sum(max_joltage_part_2(bank) for bank in banks)
+    part_2 = sum(max_joltage_part_2(bank, 12) for bank in banks)
     print(f"Part 2: {part_2}")
 
 
