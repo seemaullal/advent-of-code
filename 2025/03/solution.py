@@ -1,32 +1,43 @@
 from pathlib import Path
 
 
-def part_1(instructions):
-    result = 0
-    for banks in instructions:
-        max_bank_excluding_last = max(banks[:-1])
-        max_index = banks.index(max_bank_excluding_last)
-        ones_place = max(banks[max_index + 1 :])
-        max_joltage = max_bank_excluding_last * 10 + ones_place
-        result += max_joltage
-    return result
+def max_joltage_part_1(digits):
+    max_tens = max(digits[:-1])
+    max_tens_index = digits.index(max_tens)
+    ones_place = max(digits[max_tens_index + 1 :])
+    return max_tens * 10 + ones_place
 
 
-def part_2(instructions):
-    pass
+def max_joltage_part_2(digits):
+    to_skip = len(digits) - 12
+    result = []
+    skipped_count = 0
+    for digit in digits:
+        while result and skipped_count < to_skip and result[-1] < digit:
+            result.pop()
+            skipped_count += 1
+        if len(result) < 12:
+            result.append(digit)
+        else:
+            skipped_count += 1
+    return int("".join(map(str, result)))
 
 
-def parse_instructions(filename):
+def parse_input(filename):
     return [
-        [int(bank) for bank in banks]
-        for banks in Path(filename).read_text().strip().splitlines()
+        [int(digit) for digit in line]
+        for line in Path(filename).read_text().strip().splitlines()
     ]
 
 
 def solve():
-    instructions = parse_instructions("inputs/input.txt")
-    print(f"Part 1: {part_1(instructions)}")
-    print(f"Part 2: {part_2(instructions)}")
+    banks = parse_input("inputs/input.txt")
+
+    part_1 = sum(max_joltage_part_1(bank) for bank in banks)
+    print(f"Part 1: {part_1}")
+
+    part_2 = sum(max_joltage_part_2(bank) for bank in banks)
+    print(f"Part 2: {part_2}")
 
 
 if __name__ == "__main__":
