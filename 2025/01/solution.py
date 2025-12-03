@@ -1,26 +1,47 @@
-part_1 = 0
-part_2 = 0
+from pathlib import Path
 
-with open("inputs/input.txt", "r") as file:
-    current = 50
-    for line in file.read().splitlines():
-        rotation = line[0]
-        distance = int(line[1:])
-        for num in range(distance):
-            if rotation == "L":
-                current -= 1
+
+def part_1(instructions):
+    position = 50
+    result = 0
+    for rotation, distance in instructions:
+        if rotation == "L":
+            position = (position - distance) % 100
+        else:
+            position = (position + distance) % 100
+        if position == 0:
+            result += 1
+    return result
+
+
+def part_2(instructions):
+    position = 50
+    result = 0
+    for rotation, distance in instructions:
+        if rotation == "L":
+            if position == 0:
+                result += distance // 100
             else:
-                current += 1
-            current = current % 100
-            if current == 0:
-                part_2 += 1
-        # if rotation == "L":
-        #     current = (current - distance + 100) % 100
-        # else:
-        #     current = (current + distance) % 100
-        # if current == 0:
-        #     part_1 += 1
+                result += (distance + 100 - position) // 100
+            position = (position - distance) % 100
+        else:
+            result += (position + distance) // 100
+            position = (position + distance) % 100
+    return result
 
 
-print(f"Part 1: {part_1}")
-print(f"Part 2: {part_2}")
+def parse_instructions(filename):
+    return [
+        (instruction[0], int(instruction[1:]))
+        for instruction in Path(filename).read_text().strip().splitlines()
+    ]
+
+
+def solve():
+    instructions = parse_instructions("inputs/input.txt")
+    print(f"Part 1: {part_1(instructions)}")
+    print(f"Part 2: {part_2(instructions)}")
+
+
+if __name__ == "__main__":
+    solve()
