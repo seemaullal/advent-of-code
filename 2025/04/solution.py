@@ -28,7 +28,8 @@ def part_1(grid):
 def part_2(grid):
     grid_copy = [row[:] for row in grid]
     result = 0
-    while True:
+    changed = True
+    while changed:
         changed = False
         for row_num in range(len(grid_copy)):
             for col_num in range(len(grid_copy[0])):
@@ -36,8 +37,6 @@ def part_2(grid):
                     changed = True
                     result += 1
                     grid_copy[row_num][col_num] = "."
-        if not changed:
-            break
     return result
 
 
