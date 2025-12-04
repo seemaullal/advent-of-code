@@ -3,17 +3,17 @@ from pathlib import Path
 DIRECTIONS = ((-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1))
 
 
-def is_accessible(grid, row, col):
-    if grid[row][col] != "@":
-        return False
+def number_adjacent_rolls(grid, row, col):
     num_rolls = 0
     for row_d, col_d in DIRECTIONS:
-        to_check_row = row + row_d
-        to_check_col = col + col_d
-        if 0 <= to_check_row < len(grid) and 0 <= to_check_col < len(grid[0]):
-            if grid[to_check_row][to_check_col] == "@":
+        if 0 <= row + row_d < len(grid) and 0 <= col + col_d < len(grid[0]):
+            if grid[row + row_d][col + col_d] == "@":
                 num_rolls += 1
-    return num_rolls < 4
+    return num_rolls
+
+
+def is_accessible(grid, row, col):
+    return grid[row][col] == "@" and number_adjacent_rolls(grid, row, col) < 4
 
 
 def part_1(grid):
