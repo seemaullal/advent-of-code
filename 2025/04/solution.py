@@ -17,12 +17,11 @@ def is_accessible(grid, row, col):
 
 
 def part_1(grid):
-    result = 0
-    for row_num in range(len(grid)):
-        for col_num in range(len(grid[0])):
-            if is_accessible(grid, row_num, col_num):
-                result += 1
-    return result
+    return sum(
+        is_accessible(grid, row_num, col_num)
+        for row_num in range(len(grid))
+        for col_num in range(len(grid[0]))
+    )
 
 
 def part_2(grid):
