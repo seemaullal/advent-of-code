@@ -27,15 +27,18 @@ def part_1(grid):
 def part_2(grid):
     grid_copy = [row[:] for row in grid]
     result = 0
-    changed = True
-    while changed:
-        changed = False
-        for row_num in range(len(grid_copy)):
-            for col_num in range(len(grid_copy[0])):
-                if is_accessible(grid_copy, row_num, col_num):
-                    changed = True
-                    result += 1
-                    grid_copy[row_num][col_num] = "."
+    while True:
+        accessible_positions = [
+            (row_num, col_num)
+            for row_num in range(len(grid))
+            for col_num in range(len(grid[0]))
+            if is_accessible(grid_copy, row_num, col_num)
+        ]
+        if not accessible_positions:
+            break
+        for row, col in accessible_positions:
+            grid_copy[row][col] = "."
+        result += len(accessible_positions)
     return result
 
 
