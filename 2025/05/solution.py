@@ -16,11 +16,14 @@ def solve():
     print(f"Part 1: {part_1}")
 
     merged_ranges = []
+    # 1, 6  2, 8 --> 1, 8
+    # 1, 11 2, 8 --> 1, 11
+    # 1, 6  9, 11 --> 1,6 and 9,11
     for start, end in sorted(fresh_ranges):
-        if merged_ranges and start <= merged_ranges[-1][1] + 1:
-            merged_ranges[-1] = (merged_ranges[-1][0], max(merged_ranges[-1][1], end))
-        else:
+        if not merged_ranges or start > merged_ranges[-1][1]:
             merged_ranges.append((start, end))
+        else:
+            merged_ranges[-1] = (merged_ranges[-1][0], max(merged_ranges[-1][1], end))
 
     part_2 = sum(end - start + 1 for start, end in merged_ranges)
 
