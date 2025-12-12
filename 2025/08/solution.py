@@ -22,9 +22,6 @@ def solve():
     boxes = [tuple(int(num) for num in row.split(',')) for row in Path("inputs/input.txt").read_text().strip().splitlines()]
     
     n = len(boxes)
-    parent = list(range(n))
-    size = [1] * n
-
 
     edges = []
     for i in range(n):
@@ -36,18 +33,34 @@ def solve():
 
     # Sort all edges by distance
     edges.sort()
-    # Apply the first 1000 shortest connections, even if they don't merge components
+
+    parent1 = list(range(n))
+    size1 = [1] * n
     for dist, u, v in edges[:1000]:
-        union(u, v, parent, size)
+        union(u, v, parent1, size1)
 
-    comp_size = Counter()
+    comp_size1 = Counter()
     for i in range(n):
-        comp_size[find(i, parent)] += 1
+        comp_size1[find(i, parent1)] += 1
 
-    sorted_sizes = sorted(comp_size.values())
+    sorted_sizes = sorted(comp_size1.values())
     part1 = sorted_sizes[-3] * sorted_sizes[-2] * sorted_sizes[-1]
 
+    parent2 = list(range(n))
+    size2 = [1] * n
+    comps = n
+    last_edge = None
+    for _, u, v in edges:
+        if union(u, v, parent2, size2):
+            comps -= 1
+            if comps == 1:
+                last_edge = (u, v)
+                break
+                
+    part2 = boxes[last_edge[0]][0] * boxes[last_edge[1]][0]
+
     print(f"Part 1: {part1}")
+    print(f"Part 2: {part2}")
 
    
 
